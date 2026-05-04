@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Luke Purser — Creative Designer & Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F4F0;
+    --black: #111110;
+    --accent: #C4613A;
+    --muted: #8A8880;
+    --border: rgba(17,17,16,0.12);
+    --white: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    cursor: default;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.25rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    mix-blend-mode: multiply;
+  }
+
+  .nav-name {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--black);
+  }
+
+  .nav-name span {
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .nav-contact {
+    font-size: 13px;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-contact:hover { text-decoration: underline; }
+
+  /* SECTIONS — full viewport snap */
+  section {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 6rem 2.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* SCROLL INDICATOR */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.35;
+    animation: nudge 2.5s ease-in-out infinite;
+  }
+
+  .scroll-hint span {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--black);
+  }
+
+  .scroll-hint svg { display: block; }
+
+  @keyframes nudge {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(5px); }
+  }
+
+  /* === HERO === */
+  #hero {
+    background: var(--bg);
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    padding-top: 7rem;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 4rem;
+    align-items: start;
+    padding: 0 2.5rem;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-statement {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.15;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-statement em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #5C9E6E;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero-skills {
+    padding-top: 1rem;
+  }
+
+  .skills-col-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .skills-list {
+    font-size: 13px;
+    color: var(--black);
+    line-height: 2;
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  /* === PROJECT SECTIONS === */
+  .project-section {
+    background: var(--bg);
+  }
+
+  .project-section.dark {
+    background: var(--black);
+    color: var(--white);
+  }
+
+  .project-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    padding: 0 2.5rem;
+  }
+
+  .project-inner.full {
+    grid-template-columns: 1fr;
+    max-width: 900px;
+  }
+
+  .project-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .project-number {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .dark .project-number { color: rgba(255,255,255,0.4); }
+
+  .project-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+  }
+
+  .dark .project-name { color: var(--white); }
+
+  .project-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .project-context {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .dark .project-context { color: rgba(255,255,255,0.45); }
+
+  .project-desc {
+    font-size: 15px;
+    line-height: 1.7;
+    font-weight: 300;
+    color: var(--black);
+    max-width: 480px;
+  }
+
+  .dark .project-desc { color: rgba(255,255,255,0.75); }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 0.5rem;
+  }
+
+  .tag {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border: 0.5px solid var(--border);
+    border-radius: 100px;
+    color: var(--muted);
+  }
+
+  .dark .tag {
+    border-color: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* IMAGE PLACEHOLDERS */
+  .project-visual {
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.06);
+    position: relative;
+  }
+
+  .dark .project-visual { background: rgba(255,255,255,0.06); }
+
+  .project-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .img-placeholder {
+    width: 100%;
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .img-placeholder span {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0.5;
+  }
+
+  /* VIDEO EMBED */
+  .video-wrap {
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    background: #000;
+  }
+
+  .video-wrap iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  /* MAKING THINGS — GRID */
+  .making-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+
+  .making-cell {
+    background: var(--bg);
+    aspect-ratio: 1;
+    overflow: hidden;
+  }
+
+  .making-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .making-cell:hover img { transform: scale(1.04); }
+
+  /* CONTACT */
+  #contact {
+    background: var(--black);
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  .contact-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+  }
+
+  .contact-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 2rem;
+  }
+
+  .contact-prompt {
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+
+  .contact-email {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 6vw, 80px);
+    font-weight: 400;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    display: inline-block;
+    border-bottom: 2px solid var(--accent);
+    transition: color 0.2s;
+  }
+
+  .contact-email:hover { color: var(--accent); }
+
+  .contact-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+    font-size: 12px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.04em;
+  }
+
+  /* SECTION DIVIDER */
+  .section-rule {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 0.5px;
+    background: var(--border);
+  }
+
+  /* FADE IN ON SCROLL */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .fade-in:nth-child(2) { transition-delay: 0.1s; }
+  .fade-in:nth-child(3) { transition-delay: 0.2s; }
+  .fade-in:nth-child(4) { transition-delay: 0.3s; }
+
+  /* WGAC highlight */
+  .wgac-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 1.5rem;
+  }
+
+  .wgac-item {
+    background: rgba(0,0,0,0.04);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+  }
+
+  .wgac-item-title {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .wgac-item-desc {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* SCROLL PROGRESS */
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: var(--accent);
+    z-index: 200;
+    transition: width 0.1s linear;
+    width: 0%;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<nav>
+  <div class="nav-name">Luke Purser <span>— Creative Designer & Builder</span></div>
+  <a href="mailto:lukepurser@me.com" class="nav-contact">Get in touch</a>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <div class="hero-inner">
+    <div>
+      <p class="hero-eyebrow fade-in">Sydney, Australia · Available now</p>
+      <h1 class="hero-statement fade-in">
+        Hi, I'm Luke.<br>
+        I make brands look good,<br>
+        products work properly,<br>
+        and occasionally bend<br>
+        <em>neon into weird shapes.</em>
+      </h1>
+      <p class="hero-sub fade-in">
+        Six years building things that live at the intersection of design, digital and "wait, you built that yourself?" — across food-tech, consumer goods, and things I made at 11pm for fun.
+      </p>
+      <div class="hero-status fade-in">
+        <div class="status-dot"></div>
+        Open to new roles
+      </div>
+    </div>
+    <div class="hero-skills fade-in">
+      <p class="skills-col-label">As a designer</p>
+      <div class="skills-list">
+        Brand Identity<br>
+        Art Direction<br>
+        Campaign Design<br>
+        Motion & GIFs<br>
+        Editorial & Print<br>
+        Photography Direction<br>
+        Illustration
+      </div>
+      <p class="skills-col-label">As a builder</p>
+      <div class="skills-list">
+        Web & Funnels<br>
+        No-Code Platforms<br>
+        Automation & CRM<br>
+        Product Design<br>
+        Systems Thinking<br>
+        Figma · Adobe Suite
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M8 3v10M8 13l-4-4M8 13l4-4" stroke="#111110" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ===== NOURISH INGREDIENTS ===== -->
+<section id="nourish" class="project-section dark">
+  <div class="project-inner">
+    <div class="project-meta">
+      <p class="project-number fade-in">01 / Nourish Ingredients · 2022–2024</p>
+      <h2 class="project-name fade-in">Full<br>Brand<br><em>Build</em></h2>
+      <p class="project-context fade-in">Senior Designer · Food-tech startup</p>
+      <p class="project-desc fade-in">
+        Brand identity to funnels — built end to end. Logo, tone of voice, product naming, photography, brand guidelines microsite, HubSpot integration, emails. The kind of project where you touch everything and nothing comes back broken.
+      </p>
+      <div class="tags fade-in">
+        <span class="tag">Brand Identity</span>
+        <span class="tag">Naming</span>
+        <span class="tag">Product Design</span>
+        <span class="tag">Photography</span>
+        <span class="tag">Web</span>
+        <span class="tag">Automation</span>
+      </div>
+    </div>
+    <div class="project-visual fade-in">
+      <!-- REPLACE src with your Cloudinary image URL -->
+      <div class="img-placeholder">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" opacity="0.3">
+          <rect x="2" y="2" width="28" height="28" rx="4" stroke="#F5F4F0" stroke-width="1.5"/>
+          <circle cx="11" cy="12" r="3" stroke="#F5F4F0" stroke-width="1.5"/>
+          <path d="M2 22l8-6 6 5 5-4 9 7" stroke="#F5F4F0" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span>Nourish visual</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Next</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M8 3v10M8 13l-4-4M8 13l4-4" stroke="#F5F4F0" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ===== WHO GIVES A CRAP ===== -->
+<section id="wgac" class="project-section">
+  <div class="project-inner">
+    <div class="project-meta">
+      <p class="project-number fade-in">02 / Who Gives A Crap · 2019–2022</p>
+      <h2 class="project-name fade-in">Campaigns<br>& <em>Content</em></h2>
+      <p class="project-context fade-in">In-house Designer · Consumer brand</p>
+      <p class="project-desc fade-in">
+        Three years in-house across brand, campaigns, social and product. Blog build-out, special edition product launches, paid ad videos, and — personal favourite — a physical newspaper I designed and illustrated myself.
+      </p>
+      <div class="wgac-items fade-in">
+        <div class="wgac-item">
+          <p class="wgac-item-title">The Daily Crap</p>
+          <p class="wgac-item-desc">Physical newspaper. Designed & illustrated by me.</p>
+        </div>
+        <div class="wgac-item">
+          <p class="wgac-item-title">Special Editions ×2</p>
+          <p class="wgac-item-desc">Landing pages, eDMs, gifts, key art.</p>
+        </div>
+        <div class="wgac-item">
+          <p class="wgac-item-title">Paid Ads</p>
+          <p class="wgac-item-desc">Video, social GIFs, motion.</p>
+        </div>
+        <div class="wgac-item">
+          <p class="wgac-item-title">Blog Build-out</p>
+          <p class="wgac-item-desc">Look, feel and editorial structure.</p>
+        </div>
+      </div>
+      <div class="tags fade-in">
+        <span class="tag">Campaign</span>
+        <span class="tag">Motion</span>
+        <span class="tag">Editorial</span>
+        <span class="tag">Illustration</span>
+        <span class="tag">Social</span>
+      </div>
+    </div>
+    <div class="project-visual fade-in">
+      <div class="img-placeholder">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" opacity="0.2">
+          <rect x="2" y="2" width="28" height="28" rx="4" stroke="#111110" stroke-width="1.5"/>
+          <circle cx="11" cy="12" r="3" stroke="#111110" stroke-width="1.5"/>
+          <path d="M2 22l8-6 6 5 5-4 9 7" stroke="#111110" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span>WGAC visual</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Next</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M8 3v10M8 13l-4-4M8 13l4-4" stroke="#111110" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ===== JOB QUOTE ===== -->
+<section id="jobquote" class="project-section" style="background: #EEECEA;">
+  <div class="project-inner">
+    <div class="project-visual fade-in" style="order: -1;">
+      <div class="img-placeholder">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" opacity="0.2">
+          <rect x="2" y="2" width="28" height="28" rx="4" stroke="#111110" stroke-width="1.5"/>
+          <path d="M8 10h16M8 16h10M8 22h12" stroke="#111110" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span>Job Quote visual</span>
+      </div>
+    </div>
+    <div class="project-meta">
+      <p class="project-number fade-in">03 / Job Quote · Side project</p>
+      <h2 class="project-name fade-in">End-to-end<br><em>Product</em><br>Build</h2>
+      <p class="project-context fade-in">Solo build · Trades & service businesses</p>
+      <p class="project-desc fade-in">
+        Quoting tool built for a trades business — form, automation, CRM, pricing logic, subscription model. Ready to deploy. The tiler had other plans.
+      </p>
+      <div class="tags fade-in">
+        <span class="tag">Product Design</span>
+        <span class="tag">Automation</span>
+        <span class="tag">Forms</span>
+        <span class="tag">CRM</span>
+        <span class="tag">Systems Thinking</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Next</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M8 3v10M8 13l-4-4M8 13l4-4" stroke="#111110" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ===== MAKING THINGS ===== -->
+<section id="making" class="project-section">
+  <div style="max-width: 1200px; margin: 0 auto; width: 100%; padding: 0 2.5rem;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;">
+      <div class="project-meta">
+        <p class="project-number fade-in">04 / Making Things · Ongoing</p>
+        <h2 class="project-name fade-in">Craft,<br>Code &<br><em>Curiosity</em></h2>
+        <p class="project-desc fade-in" style="margin-top: 1rem;">
+          3D character design, handmade neon art, NFT collection. Things built at 11pm because the brief was interesting. Shows up in the work.
+        </p>
+        <div style="margin-top: 1.5rem;" class="fade-in">
+          <p class="skills-col-label">Minimetas — NFT collection</p>
+          <p style="font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.6; margin-bottom: 1.5rem;">Digital art, animated GIFs, web3. Built during the moment, still proud of the work.</p>
+          <p class="skills-col-label">Neon Art — physical making</p>
+          <p style="font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.6; margin-bottom: 1.5rem;">Designed, bent and built by hand. Proof that the making instinct isn't just digital.</p>
+          <p class="skills-col-label">3D Design — character renders</p>
+          <p style="font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.6;">Foundations of form and spatial thinking — no AI, just craft.</p>
+        </div>
+        <div class="tags fade-in" style="margin-top: 1.5rem;">
+          <span class="tag">3D</span>
+          <span class="tag">Fabrication</span>
+          <span class="tag">NFT</span>
+          <span class="tag">Motion</span>
+          <span class="tag">Art</span>
+        </div>
+      </div>
+      <div class="fade-in">
+        <div class="making-grid">
+          <!-- REPLACE these src with your Cloudinary image URLs -->
+          <div class="making-cell"><div class="img-placeholder" style="aspect-ratio:1;"><span>Neon 1</span></div></div>
+          <div class="making-cell"><div class="img-placeholder" style="aspect-ratio:1;"><span>Neon 2</span></div></div>
+          <div class="making-cell"><div class="img-placeholder" style="aspect-ratio:1;"><span>3D</span></div></div>
+          <div class="making-cell"><div class="img-placeholder" style="aspect-ratio:1;"><span>NFT 1</span></div></div>
+          <div class="making-cell"><div class="img-placeholder" style="aspect-ratio:1;"><span>NFT 2</span></div></div>
+          <div class="making-cell"><div class="img-placeholder" style="aspect-ratio:1;"><span>Neon 3</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Next</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M8 3v10M8 13l-4-4M8 13l4-4" stroke="#111110" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+  <div class="contact-inner">
+    <p class="contact-eyebrow fade-in">05 / Say hello</p>
+    <p class="contact-prompt fade-in">Job offers, interesting briefs, or questions about neon — via</p>
+    <a href="mailto:lukepurser@me.com" class="contact-email fade-in">lukepurser@me.com</a>
+    <div class="contact-footer fade-in">
+      Luke Purser · Sydney, Australia · 2025
+    </div>
+  </div>
+</section>
+
+<script>
+  // Progress bar
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = (scrollTop / docHeight) * 100;
+    progress.style.width = pct + '%';
+  });
+
+  // Fade in on scroll
+  const faders = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  faders.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
