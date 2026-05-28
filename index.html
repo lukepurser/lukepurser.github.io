@@ -1051,7 +1051,7 @@
   <div class="paid-ads-grid" style="max-width: 80%; margin: 0 auto; display:grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding: 0 2rem;">
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="auto">
+      <video class="pa-video" loop playsinline muted preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_1.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -1060,7 +1060,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="auto">
+      <video class="pa-video" loop playsinline muted preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_2.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -1069,7 +1069,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="auto">
+      <video class="pa-video" loop playsinline muted preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_3.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -1078,7 +1078,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="auto">
+      <video class="pa-video" loop playsinline muted preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_4.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -1087,7 +1087,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="auto">
+      <video class="pa-video" loop playsinline muted preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_5.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -1096,7 +1096,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="auto">
+      <video class="pa-video" loop playsinline muted preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_6.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -1105,7 +1105,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="auto">
+      <video class="pa-video" loop playsinline muted preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_7.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -1114,7 +1114,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="auto">
+      <video class="pa-video" loop playsinline muted preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_8.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -1123,7 +1123,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="auto">
+      <video class="pa-video" loop playsinline muted preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_9.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -1132,7 +1132,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="auto">
+      <video class="pa-video" loop playsinline muted preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_10.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -1141,7 +1141,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="auto">
+      <video class="pa-video" loop playsinline muted preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_11.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -1150,7 +1150,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="auto">
+      <video class="pa-video" loop playsinline muted preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_12.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -1215,15 +1215,27 @@
       var video = cell.querySelector('.pa-video');
       var btn   = cell.querySelector('.pa-btn');
 
-      // Safari first-frame fix: seek to 0.1s so a frame is painted
+      // First-frame fix: briefly play muted then pause to paint a frame
+      video.muted = true;
+      var firstFrameShown = false;
       function showFirstFrame() {
-        video.currentTime = 0.1;
+        if (firstFrameShown) return;
+        firstFrameShown = true;
+        video.play().then(function() {
+          video.pause();
+          video.currentTime = 0;
+        }).catch(function() {
+          video.currentTime = 0.1;
+        });
       }
-      video.addEventListener('loadedmetadata', showFirstFrame);
-      if (video.readyState >= 1) showFirstFrame();
+      video.addEventListener('loadeddata', showFirstFrame);
+      video.addEventListener('canplay', showFirstFrame);
+      if (video.readyState >= 3) showFirstFrame();
 
       cell.addEventListener('click', function() {
         if (video.paused) {
+          video.muted = false;
+          video.currentTime = 0;
           video.play();
           cell.classList.add('playing');
           btn.innerHTML = pauseIcon;
@@ -1436,7 +1448,7 @@
     <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/3.webp" alt="Hey Neon neon sign" style="height:clamp(370px, 47vw, 693px); width:auto; display:block;">
   </div>
   <div style="border-radius:16px; overflow:hidden; height:clamp(370px, 47vw, 693px); aspect-ratio:9/16; flex-shrink:0; position:relative; cursor:pointer;" id="hn03-wrap">
-    <video id="hn03-vid" style="width:100%; height:100%; object-fit:cover; display:block;">
+    <video id="hn03-vid" muted playsinline preload="auto" style="width:100%; height:100%; object-fit:cover; display:block;">
       <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/3.mp4" type="video/mp4">
     </video>
     <div id="hn03-btn" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; transition:opacity 0.2s;">
@@ -1450,13 +1462,18 @@
       var btn  = document.getElementById('hn03-btn');
       var pauseSvg = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><rect x="28" y="26" width="14" height="44" rx="3" fill="#fff"/><rect x="54" y="26" width="14" height="44" rx="3" fill="#fff"/></svg>';
       var playSvg  = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><polygon points="38,28 74,48 38,68" fill="#fff"/></svg>';
-      // Safari first-frame fix
-      function showFirstFrame(){ vid.currentTime = 0.1; }
-      vid.addEventListener('loadedmetadata', showFirstFrame);
-      if(vid.readyState >= 1) showFirstFrame();
+      // First-frame fix: briefly play muted then pause
+      var hn03shown = false;
+      function hn03FirstFrame() {
+        if (hn03shown) return; hn03shown = true;
+        vid.play().then(function(){ vid.pause(); vid.currentTime = 0; }).catch(function(){ vid.currentTime = 0.1; });
+      }
+      vid.addEventListener('loadeddata', hn03FirstFrame);
+      vid.addEventListener('canplay', hn03FirstFrame);
+      if (vid.readyState >= 3) hn03FirstFrame();
 
       wrap.addEventListener('click', function(){
-        if(vid.paused){ vid.play(); btn.style.opacity='0'; } else { vid.pause(); btn.innerHTML=playSvg; btn.style.opacity='1'; }
+        if(vid.paused){ vid.muted=false; vid.currentTime=0; vid.play(); btn.style.opacity='0'; } else { vid.pause(); btn.innerHTML=playSvg; btn.style.opacity='1'; }
       });
       wrap.addEventListener('mouseenter', function(){ if(!vid.paused){ btn.innerHTML=pauseSvg; btn.style.opacity='1'; } });
       wrap.addEventListener('mouseleave', function(){ if(!vid.paused){ btn.style.opacity='0'; } });
@@ -1466,7 +1483,7 @@
 
 <div class="hn-row" style="background:#EEEEE9; padding: 2rem 4rem 7rem; display:flex; justify-content:center; align-items:flex-start; gap: 3rem;">
   <div style="border-radius:16px; overflow:hidden; height:clamp(370px, 47vw, 693px); aspect-ratio:9/16; flex-shrink:0; position:relative; cursor:pointer;" id="hn04-wrap">
-    <video id="hn04-vid" style="width:100%; height:100%; object-fit:cover; display:block;">
+    <video id="hn04-vid" muted playsinline preload="auto" style="width:100%; height:100%; object-fit:cover; display:block;">
       <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/4.mp4" type="video/mp4">
     </video>
     <div id="hn04-btn" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; transition:opacity 0.2s;">
@@ -1480,12 +1497,18 @@
       var btn  = document.getElementById('hn04-btn');
       var pauseSvg = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><rect x="28" y="26" width="14" height="44" rx="3" fill="#fff"/><rect x="54" y="26" width="14" height="44" rx="3" fill="#fff"/></svg>';
       var playSvg  = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><polygon points="38,28 74,48 38,68" fill="#fff"/></svg>';
-      // Safari first-frame fix
-      function showFirstFrame(){ vid.currentTime = 0.1; }
-      vid.addEventListener('loadedmetadata', showFirstFrame);
-      if(vid.readyState >= 1) showFirstFrame();
+      // First-frame fix: briefly play muted then pause
+      var hn04shown = false;
+      function hn04FirstFrame() {
+        if (hn04shown) return; hn04shown = true;
+        vid.play().then(function(){ vid.pause(); vid.currentTime = 0; }).catch(function(){ vid.currentTime = 0.1; });
+      }
+      vid.addEventListener('loadeddata', hn04FirstFrame);
+      vid.addEventListener('canplay', hn04FirstFrame);
+      if (vid.readyState >= 3) hn04FirstFrame();
+
       wrap.addEventListener('click', function(){
-        if(vid.paused){ vid.play(); btn.style.opacity='0'; } else { vid.pause(); btn.innerHTML=playSvg; btn.style.opacity='1'; }
+        if(vid.paused){ vid.muted=false; vid.currentTime=0; vid.play(); btn.style.opacity='0'; } else { vid.pause(); btn.innerHTML=playSvg; btn.style.opacity='1'; }
       });
       wrap.addEventListener('mouseenter', function(){ if(!vid.paused){ btn.innerHTML=pauseSvg; btn.style.opacity='1'; } });
       wrap.addEventListener('mouseleave', function(){ if(!vid.paused){ btn.style.opacity='0'; } });
