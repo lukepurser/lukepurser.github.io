@@ -1215,6 +1215,13 @@
       var video = cell.querySelector('.pa-video');
       var btn   = cell.querySelector('.pa-btn');
 
+      // Safari first-frame fix: seek to 0.1s so a frame is painted
+      function showFirstFrame() {
+        video.currentTime = 0.1;
+      }
+      video.addEventListener('loadedmetadata', showFirstFrame);
+      if (video.readyState >= 1) showFirstFrame();
+
       cell.addEventListener('click', function() {
         if (video.paused) {
           video.play();
@@ -1443,6 +1450,11 @@
       var btn  = document.getElementById('hn03-btn');
       var pauseSvg = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><rect x="28" y="26" width="14" height="44" rx="3" fill="#fff"/><rect x="54" y="26" width="14" height="44" rx="3" fill="#fff"/></svg>';
       var playSvg  = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><polygon points="38,28 74,48 38,68" fill="#fff"/></svg>';
+      // Safari first-frame fix
+      function showFirstFrame(){ vid.currentTime = 0.1; }
+      vid.addEventListener('loadedmetadata', showFirstFrame);
+      if(vid.readyState >= 1) showFirstFrame();
+
       wrap.addEventListener('click', function(){
         if(vid.paused){ vid.play(); btn.style.opacity='0'; } else { vid.pause(); btn.innerHTML=playSvg; btn.style.opacity='1'; }
       });
@@ -1468,6 +1480,10 @@
       var btn  = document.getElementById('hn04-btn');
       var pauseSvg = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><rect x="28" y="26" width="14" height="44" rx="3" fill="#fff"/><rect x="54" y="26" width="14" height="44" rx="3" fill="#fff"/></svg>';
       var playSvg  = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><polygon points="38,28 74,48 38,68" fill="#fff"/></svg>';
+      // Safari first-frame fix
+      function showFirstFrame(){ vid.currentTime = 0.1; }
+      vid.addEventListener('loadedmetadata', showFirstFrame);
+      if(vid.readyState >= 1) showFirstFrame();
       wrap.addEventListener('click', function(){
         if(vid.paused){ vid.play(); btn.style.opacity='0'; } else { vid.pause(); btn.innerHTML=playSvg; btn.style.opacity='1'; }
       });
