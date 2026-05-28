@@ -647,7 +647,7 @@
 
   .contact-email {
     font-size: clamp(36px, 6vw, 80px);
-    font-weight: 700;
+    font-weight: 500;
     letter-spacing: -0.04em;
     color: var(--white);
     text-decoration: none;
@@ -666,6 +666,132 @@
     font-weight: 400;
     color: rgba(255,255,255,0.2);
     letter-spacing: 0.02em;
+  }
+
+  /* ═══════════════════════════════════════
+     MOBILE
+  ═══════════════════════════════════════ */
+  @media (max-width: 900px) {
+
+    /* Nav */
+    nav#nav { padding: 1rem 1.25rem; }
+    .nav-centre { display: none !important; }
+
+    /* Hide right-side breadcrumb nav */
+    .chapter-nav { display: none !important; }
+
+    /* Hero */
+    #hero { padding: 6rem 1.25rem 3rem; }
+    .hero-inner {
+      grid-template-columns: 1fr !important;
+      gap: 2.5rem;
+    }
+    .hero-sub { max-width: 100%; }
+
+    /* Project intro sections */
+    .chapter-intro { padding: 3.5rem 1.25rem; }
+    .chapter-intro.compact { padding: 3rem 1.25rem; }
+
+    .chapter-intro-inner {
+      margin: 0 !important;
+      width: 100% !important;
+      grid-template-columns: 1fr !important;
+      gap: 2rem;
+    }
+
+    .chapter-intro.compact .chapter-intro-inner {
+      grid-template-columns: 1fr !important;
+    }
+
+    .chapter-intro.compact .project-name {
+      white-space: normal;
+    }
+
+    /* Project name — tighten on small screens */
+    .project-name { font-size: clamp(36px, 10vw, 56px); }
+
+    /* Media modules */
+    .module--duo {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .module--duo img { min-height: auto; }
+
+    .module--trio {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    /* Highlight cards */
+    .highlight-grid { grid-template-columns: 1fr; }
+
+    /* Video stages — less padding, videos fill more width */
+    .video-stage {
+      padding: 3rem 1.25rem !important;
+      flex-wrap: wrap;
+      gap: 1.25rem !important;
+    }
+    .video-stage video {
+      width: 96% !important;
+      max-width: 100% !important;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2) !important;
+    }
+
+    /* Paid ads grid */
+    .paid-ads-section { padding: 3.5rem 0 !important; }
+    .paid-ads-grid {
+      max-width: 100% !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0.75rem !important;
+      padding: 0 1.25rem !important;
+    }
+
+    /* WGAC gif grid */
+    .gif-grid-section { padding: 3.5rem 0 !important; }
+    .gif-grid {
+      max-width: 100% !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0.75rem !important;
+      padding: 0 1.25rem !important;
+    }
+
+    /* Minimetas gif grid — single column, 85% width */
+    .minimetas-gif-section { padding: 3rem 1.25rem !important; }
+    .minimetas-gif-grid {
+      max-width: 85% !important;
+      grid-template-columns: 1fr !important;
+      gap: 0.75rem !important;
+    }
+
+    /* Hey Neon — stack image+video pairs */
+    .hn-row {
+      flex-direction: column !important;
+      align-items: center !important;
+      padding: 3rem 1.25rem !important;
+      gap: 1.5rem !important;
+    }
+    .hn-row > div {
+      width: 100% !important;
+      height: auto !important;
+    }
+    .hn-row img {
+      height: auto !important;
+      width: 100% !important;
+    }
+    .hn-row video {
+      width: 100% !important;
+      height: auto !important;
+    }
+    /* Fix the aspect-ratio video wrapper height on mobile */
+    #hn03-wrap, #hn04-wrap {
+      height: auto !important;
+      aspect-ratio: 9/16;
+      width: 100% !important;
+    }
+
+    /* Contact */
+    #contact { padding: 4rem 1.25rem; }
+
   }
 
 </style>
@@ -795,7 +921,7 @@
     </div>
     <div class="project-detail">
       <p class="project-desc fade-in">
-        Nourish Ingredients is creating animal-free fats through precision fermentation, a technically ambitious company in the Australian food sector. Brought in as Head of Design, I rebuilt the brand from the ground up: a complete identity system, tone of voice, product architecture, packaging, photography direction, website, sales automations, investor decks and internal templates. Working alongside the C-suite and Head of Marketing, the result was a brand that made deep tech feel desirable and helped establish Nourish Ingredients as a leader in novel food.
+        Nourish Ingredients creates animal-free fats through precision fermentation, one of the more technically ambitious companies in Australian food tech. I joined as Head of Design and rebuilt the brand from the ground up: identity system, tone of voice, product architecture, packaging, photography direction, website, sales automations, investor decks and internal systems. Working closely with the C-suite and marketing team, the challenge was making deep tech feel clear, desirable and commercially ready. The result was a brand that helped position Nourish Ingredients as a leader in novel food.
       </p>
       <div class="tags fade-in">
         <span class="tag">Branding</span>
@@ -808,7 +934,7 @@
 </div>
 
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/2.webp" alt=""></div>
-<div style="background:#000; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
+<div class="video-stage" style="background:#000; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
   <video id="ni03-video" autoplay loop muted playsinline style="width:60%; display:block; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px;">
     <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/3.mp4" type="video/mp4">
   </video>
@@ -824,13 +950,12 @@
 </script>
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/4.webp" alt=""></div>
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/5.webp" alt=""></div>
-<div style="background:#000; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
+<div class="video-stage" style="background:#000; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
   <video autoplay loop muted playsinline style="width:70%; display:block; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px;">
     <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/6.mp4" type="video/mp4">
   </video>
 </div>
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/7.webp" alt=""></div>
-<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/8.webp" alt=""></div>
 <!-- Product copy block — separates brand and product chapters -->
 <div class="chapter-intro compact tinted">
   <div class="chapter-intro-inner">
@@ -841,7 +966,7 @@
     </div>
     <div class="project-detail">
       <p class="project-desc fade-in">
-        Tastilux® and Creamilux® are two proprietary fat ingredients made to compete on taste. I created both names and built everything around them: packaging, sampling events, product landing pages, sales decks and automated funnels that moved prospects from awareness to qualified lead.
+        Tastilux® and Creamilux® are proprietary fat ingredients designed to compete on taste. I created both names and built the surrounding ecosystem: packaging, sampling experiences, landing pages, sales decks and automated lead funnels that moved prospects from awareness to qualified conversations. The focus was to make highly technical ingredients feel tangible, memorable and easy to sell.
       </p>
       <div class="tags fade-in">
         <span class="tag">Product Naming</span>
@@ -857,7 +982,7 @@
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/12.webp" alt=""></div>
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/13.webp" alt=""></div>
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/14.webp" alt=""></div>
-<div style="background:#FF3D3D; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
+<div class="video-stage" style="background:#FF3D3D; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
   <video autoplay loop muted playsinline style="width:70%; display:block; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; box-shadow: 0 32px 80px rgba(0,0,0,0.35);">
     <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/15.mp4" type="video/mp4">
   </video>
@@ -868,7 +993,7 @@
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/19.webp" alt=""></div>
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/20.webp" alt=""></div>
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/21.webp" alt=""></div>
-<div style="background:#0D6DFF; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
+<div class="video-stage" style="background:#0D6DFF; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
   <video autoplay loop muted playsinline style="width:70%; display:block; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; box-shadow: 0 32px 80px rgba(0,0,0,0.35);">
     <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/22.mp4" type="video/mp4">
   </video>
@@ -894,7 +1019,7 @@
     </div>
     <div class="project-detail">
       <p class="project-desc fade-in">
-        I moved to Los Angeles to sell toilet paper. Who Gives A Crap relocated their team during a period of rapid growth and expansion into the US and Europe. As an integrated designer in a fast, scrappy environment, I worked across campaigns, limited editions, socials, Impact and eDMs. I built out their first blog, Talking Crap, hired and directed a video team as they moved heavy into paid Facebook ads, and established systems for rapid ideation and thumb-stopping content. This role sharpened my understanding of performance design: how to move fast, stay creative and connect output to sales metrics.
+        I moved to Los Angeles to sell toilet paper. Who Gives A Crap relocated part of the team during a period of rapid growth across the US and Europe. Working as an integrated designer in a fast, scrappy environment, I worked across campaigns, limited editions, socials, impact communications and eDMs. I built the company&#8217;s first blog, Talking Crap, hired and directed a video team as the brand leaned heavily into paid social, and helped establish systems for rapid ideation and content production. The role sharpened my understanding of performance design: moving quickly, staying creatively unpredictable and tying output directly to commercial results.
       </p>
       <div class="tags fade-in">
         <span class="tag">Design &amp; Art Direction</span>
@@ -914,7 +1039,7 @@
 </div>
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/3.webp" alt=""></div>
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/4.webp" alt=""></div>
-<div style="background:#FDBB1F; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
+<div class="video-stage" style="background:#FDBB1F; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
   <video autoplay loop muted playsinline style="width:70%; display:block; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; box-shadow: 0 32px 80px rgba(0,0,0,0.35);">
     <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/5.mp4" type="video/mp4">
   </video>
@@ -922,11 +1047,11 @@
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/6.webp" alt=""></div>
 
 <!-- ╌╌ WGAC PAID ADS GRID ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
-<div style="background:#EEEEE9; padding: 7rem 0;">
-  <div style="max-width: 80%; margin: 0 auto; display:grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding: 0 2rem;">
+<div class="paid-ads-section" style="background:#EEEEE9; padding: 7rem 0;">
+  <div class="paid-ads-grid" style="max-width: 80%; margin: 0 auto; display:grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding: 0 2rem;">
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="metadata">
+      <video class="pa-video" loop playsinline preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_1.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -935,7 +1060,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="metadata">
+      <video class="pa-video" loop playsinline preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_2.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -944,7 +1069,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="metadata">
+      <video class="pa-video" loop playsinline preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_3.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -953,7 +1078,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="metadata">
+      <video class="pa-video" loop playsinline preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_4.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -962,7 +1087,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="metadata">
+      <video class="pa-video" loop playsinline preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_5.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -971,7 +1096,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="metadata">
+      <video class="pa-video" loop playsinline preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_6.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -980,7 +1105,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="metadata">
+      <video class="pa-video" loop playsinline preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_7.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -989,7 +1114,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="metadata">
+      <video class="pa-video" loop playsinline preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_8.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -998,7 +1123,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="metadata">
+      <video class="pa-video" loop playsinline preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_9.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -1007,7 +1132,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="metadata">
+      <video class="pa-video" loop playsinline preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_10.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -1016,7 +1141,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="metadata">
+      <video class="pa-video" loop playsinline preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_11.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -1025,7 +1150,7 @@
     </div>
 
     <div class="pa-cell">
-      <video class="pa-video" loop playsinline preload="metadata">
+      <video class="pa-video" loop playsinline preload="auto">
         <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_12.mp4" type="video/mp4">
       </video>
       <button class="pa-btn" aria-label="Play">
@@ -1112,7 +1237,7 @@
 
 
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/7.webp" alt=""></div>
-<div style="background:#9CE3FF; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
+<div class="video-stage" style="background:#9CE3FF; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
   <video id="wgac08-video" autoplay loop muted playsinline style="width:70%; display:block; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; box-shadow: 0 32px 80px rgba(0,0,0,0.35);">
     <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/8.mp4" type="video/mp4">
   </video>
@@ -1129,8 +1254,8 @@
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/9.webp" alt=""></div>
 
 <!-- ╌╌ WGAC GIF GRID ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
-<div style="background:#EEEEE9; padding: 7rem 0;">
-  <div style="max-width: 80%; margin: 0 auto; display:grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding: 0 2rem;">
+<div class="gif-grid-section" style="background:#EEEEE9; padding: 7rem 0;">
+  <div class="gif-grid" style="max-width: 80%; margin: 0 auto; display:grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding: 0 2rem;">
 
     <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1/1;">
       <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/10_1.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.01);">
@@ -1178,7 +1303,7 @@
     </div>
     <div class="project-detail">
       <p class="project-desc fade-in">
-        Getting a trade to quote shouldn&#8217;t be hard. But it can be frustrating chasing availability, no-shows, and waiting days for a price. On the other side, tradies are losing hours quoting jobs that were never going to happen, time they&#8217;d rather spend on the tools. AutoQuote is a quoting and job management tool built for trades and service businesses, with a focus on meterage-based work: tilers, carpet installers, painters. I designed the product from the ground up with one clear goal: make it feel fast and easy for both sides. That meant prioritisation, fewer fields, cleaner flows, and a mobile-first experience built for people who work on-site. This case study maps the end-to-end journey, UX decisions, and system thinking. Try it: <a href="https://tally.so/r/jaZLOQ" target="_blank" rel="noopener" style="color:#0070D7; text-decoration:underline; text-underline-offset:3px;">tally.so/r/jaZLOQ</a>
+        Getting a trade to quote a job shouldn&#8217;t be painful. Customers are stuck chasing replies, waiting for prices and dealing with no-shows, while tradies lose hours quoting work that was never serious in the first place. AutoQuote is a quoting and job management platform designed for trades and service businesses, particularly meterage-based work like tiling, carpet installation and painting. I designed the product from the ground up with one clear goal: make the experience feel fast and frictionless for both sides through simplified flows, reduced admin and mobile-first interactions built around how people actually work on-site. This case study maps the end-to-end journey, UX decisions, and system thinking. Try it: <a href="https://tally.so/r/jaZLOQ" target="_blank" rel="noopener" style="color:#0070D7; text-decoration:underline; text-underline-offset:3px;">tally.so/r/jaZLOQ</a>
       </p>
       <div class="tags fade-in">
         <span class="tag">Product Design</span>
@@ -1212,7 +1337,7 @@
     </div>
     <div class="project-detail">
       <p class="project-desc fade-in">
-        I&#8217;ve collected art since I was a teenager. I was in the thick of the east London print scene, collecting screen prints from Pictures On Walls and arrived just slightly too late to snag the limited-edition Banksy runs. That buzz never left me: the drop, the rarity, the feeling of owning something made in short supply. When digital artists like Beeple started experimenting with blockchain, I immediately got it. Pixel art characters by CryptoPunks, generative work coming out of Art Blocks, it felt like the same energy. And like missing that Banksy, I also missed the multi-million dollar gold rush, nuts! But it was Covid lockdown, and I had time to explore and collect again. I mixed into the community and started minting a pixel art collection called the Minimetas: handcrafted pixel characters built and released into the wild.
+        I&#8217;ve collected art since I was a teenager. Back in London, I was lost in the screen print scene around Pictures On Walls, chasing limited releases and arriving slightly too late to grab the now-famous Banksy editions. That feeling never left me: the drop, the scarcity and the culture around collecting something meaningful. When artists like Beeple and projects like CryptoPunks and Art Blocks started experimenting with blockchain, I immediately understood the appeal. During Covid lockdowns I started minting my own pixel art collection called Minimetas: handcrafted pixel characters released into the wild as a creative experiment in digital collecting and online communities.
       </p>
       <div class="tags fade-in">
         <span class="tag">NFTs</span>
@@ -1228,7 +1353,7 @@
 <!-- ╌╌ MINIMETAS MODULES ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/2.webp" alt=""></div>
 
-<div style="background:#270B55; padding: 9rem 4rem; display:flex; justify-content:center; align-items:center; gap: 2rem;">
+<div class="video-stage" style="background:#270B55; padding: 9rem 4rem; display:flex; justify-content:center; align-items:center; gap: 2rem;">
   <video autoplay loop muted playsinline style="width:27%; display:block; box-shadow: 0 32px 80px rgba(0,0,0,0.45);">
     <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/3_1.mp4" type="video/mp4">
   </video>
@@ -1242,8 +1367,8 @@
 
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/4.webp" alt=""></div>
 
-<div style="background:#270B55; padding: 9rem 4rem;">
-  <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 80%; margin: 0 auto;">
+<div class="minimetas-gif-section" style="background:#270B55; padding: 9rem 4rem;">
+  <div class="minimetas-gif-grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 80%; margin: 0 auto;">
     <div style="overflow:hidden; aspect-ratio:1/1;">
       <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/5_1.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
     </div>
@@ -1284,7 +1409,7 @@
     </div>
     <div class="project-detail">
       <p class="project-desc fade-in">
-        I have a passion for illustration and vintage signage and neon lighting. All the stars aligned when I was living in Los Angeles right next to MONA, the Museum of Neon Art. I had the opportunity to work under a neon artist and study the art of neon fabrication and hand-bending glass over fire. It&#8217;s a craft that is dying out fast, with LEDs taking over, kept alive now mostly for artistic expression and nostalgia. There are only a small handful of makers left in Australia, and when I moved back I set up a small studio at home called Hey Neon to keep the passion project alive.
+        I love illustration, vintage signage and neon. While living in Los Angeles, I ended up next door to MONA, the Museum of Neon Art, and had the chance to study traditional glass bending and neon fabrication under a practising artist. It&#8217;s a surprisingly physical craft built around heat, timing and muscle memory, and one that&#8217;s disappearing quickly as LEDs replace traditional neon. When I moved back to Australia, I built a small studio at home called Hey Neon to keep the craft alive as an ongoing passion project.
       </p>
       <div class="tags fade-in">
         <span class="tag">Handmade</span>
@@ -1299,7 +1424,7 @@
 <!-- ╌╌ HEY NEON MODULES ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/2.webp" alt=""></div>
 
-<div style="background:#EEEEE9; padding: 7rem 4rem 2rem; display:flex; justify-content:center; align-items:flex-start; gap: 3rem;">
+<div class="hn-row" style="background:#EEEEE9; padding: 7rem 4rem 2rem; display:flex; justify-content:center; align-items:flex-start; gap: 3rem;">
   <div style="border-radius:16px; overflow:hidden;">
     <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/3.webp" alt="Hey Neon neon sign" style="height:clamp(370px, 47vw, 693px); width:auto; display:block;">
   </div>
@@ -1327,7 +1452,7 @@
   </script>
 </div>
 
-<div style="background:#EEEEE9; padding: 2rem 4rem 7rem; display:flex; justify-content:center; align-items:flex-start; gap: 3rem;">
+<div class="hn-row" style="background:#EEEEE9; padding: 2rem 4rem 7rem; display:flex; justify-content:center; align-items:flex-start; gap: 3rem;">
   <div style="border-radius:16px; overflow:hidden; height:clamp(370px, 47vw, 693px); aspect-ratio:9/16; flex-shrink:0; position:relative; cursor:pointer;" id="hn04-wrap">
     <video id="hn04-vid" style="width:100%; height:100%; object-fit:cover; display:block;">
       <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/4.mp4" type="video/mp4">
