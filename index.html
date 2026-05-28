@@ -5,156 +5,249 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Luke Purser — Creative Designer & Builder</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #F5F4F0;
-    --black: #111110;
-    --accent: #C4613A;
-    --muted: #8A8880;
-    --border: rgba(17,17,16,0.12);
-    --white: #FFFFFF;
+    --bg:     #FFFFFF;
+    --black:  #1D1D1F;
+    --muted:  #6E6E73;
+    --subtle: #AEAEB2;
+    --border: rgba(0,0,0,0.09);
+    --white:  #FFFFFF;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html {
-    scroll-snap-type: y mandatory;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
-  }
+  html { scroll-behavior: smooth; }
 
   body {
     background: var(--bg);
     color: var(--black);
-    font-family: 'DM Sans', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
     font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     cursor: default;
   }
 
-  /* NAV */
-  nav {
+  /* ─── NAV ─── */
+  nav#nav {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     z-index: 100;
-    padding: 1.25rem 2.5rem;
+    padding: 1.1rem 2.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    mix-blend-mode: multiply;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.4s, border-color 0.4s, transform 0.38s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  nav#nav.scrolled {
+    background: rgba(245,245,247,0.88);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  nav#nav.hidden {
+    transform: translateY(-100%);
   }
 
   .nav-name {
     font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
+    font-weight: 600;
+    letter-spacing: -0.01em;
     color: var(--black);
+    flex: 1;
   }
 
-  .nav-name span {
+  .nav-centre {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    font-weight: 400;
     color: var(--muted);
-    font-weight: 300;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    pointer-events: none;
   }
 
-  .nav-contact {
-    font-size: 13px;
-    color: var(--accent);
+  .nav-cta {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--white);
+    background: var(--black);
     text-decoration: none;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
+    padding: 7px 16px;
+    border: 0.5px solid var(--black);
+    border-radius: 980px;
+    transition: background 0.2s, opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.75; }
+
+  /* ─── PROGRESS BAR ─── */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 1.5px;
+    background: var(--black);
+    opacity: 0.25;
+    z-index: 200;
+    transition: width 0.08s linear;
+    width: 0%;
   }
 
-  .nav-contact:hover { text-decoration: underline; }
+  /* ─── CHAPTER NAV (right-side breadcrumb) ─── */
+  .chapter-nav {
+    position: fixed;
+    right: 1.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
 
-  /* SECTIONS — full viewport snap */
-  section {
+  .chapter-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .chapter-nav-label {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: #888;
+    opacity: 0;
+    transform: translateX(5px);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .chapter-nav-item:hover .chapter-nav-label {
+    opacity: 0.45;
+    transform: translateX(0);
+  }
+
+  .chapter-nav-item.active .chapter-nav-label {
+    opacity: 0.85;
+    transform: translateX(0);
+  }
+
+  .chapter-nav-marker {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--black);
+    opacity: 0.2;
+    flex-shrink: 0;
+    transition: height 0.35s cubic-bezier(0.4,0,0.2,1),
+                border-radius 0.35s cubic-bezier(0.4,0,0.2,1),
+                opacity 0.25s ease,
+                background 0.25s ease;
+  }
+
+  .chapter-nav-item.active .chapter-nav-marker {
+    opacity: 1;
+    height: 22px;
+    border-radius: 1.5px;
+  }
+
+  /* Light mode — over dark sections */
+  .chapter-nav.light .chapter-nav-label  { color: var(--white); }
+  .chapter-nav.light .chapter-nav-marker { background: var(--white); }
+
+  /* ─── FADE IN ─── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .fade-in:nth-child(2) { transition-delay: 0.08s; }
+  .fade-in:nth-child(3) { transition-delay: 0.16s; }
+  .fade-in:nth-child(4) { transition-delay: 0.24s; }
+  .fade-in:nth-child(5) { transition-delay: 0.32s; }
+
+  /* ═══════════════════════════════════════
+     HERO
+  ═══════════════════════════════════════ */
+  #hero {
     min-height: 100vh;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    padding: 6rem 2.5rem 3rem;
+    padding: 7rem 2.5rem 5rem;
+    border-bottom: 0.5px solid rgba(0,0,0,0.15);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: relative;
-  }
-
-  /* SCROLL INDICATOR */
-  .scroll-hint {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    opacity: 0.35;
-    animation: nudge 2.5s ease-in-out infinite;
-  }
-
-  .scroll-hint span {
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--black);
-  }
-
-  .scroll-hint svg { display: block; }
-
-  @keyframes nudge {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(5px); }
-  }
-
-  /* === HERO === */
-  #hero {
-    background: var(--bg);
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-    padding-top: 7rem;
   }
 
   .hero-inner {
     display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 4rem;
+    grid-template-columns: 1fr 280px;
+    gap: 5rem;
     align-items: start;
-    padding: 0 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
   }
 
   .hero-eyebrow {
     font-size: 11px;
-    letter-spacing: 0.12em;
+    font-weight: 500;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
   }
 
-  .hero-statement {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(32px, 4vw, 52px);
-    line-height: 1.15;
-    font-weight: 400;
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.02em;
+  .hero-name {
+    font-size: clamp(32px, 3.8vw, 52px);
+    font-weight: 500;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--black);
+    margin-bottom: 0;
   }
 
-  .hero-statement em {
-    font-style: italic;
-    color: var(--accent);
+  .hero-title {
+    font-size: clamp(32px, 3.8vw, 52px);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: #0009;
+    margin-bottom: 2.5rem;
   }
 
   .hero-sub {
     font-size: 15px;
+    font-weight: 400;
     color: var(--muted);
-    font-weight: 300;
-    line-height: 1.6;
-    max-width: 520px;
-    margin-bottom: 2.5rem;
+    line-height: 1.9;
+    max-width: 740px;
+    margin-bottom: 0;
+    letter-spacing: -0.01em;
+  }
+
+  /* Skills sidebar */
+  .hero-skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-roles {
+    grid-column: 1 / -1;
+    padding-top: 0.25rem;
   }
 
   .hero-status {
@@ -162,205 +255,349 @@
     align-items: center;
     gap: 8px;
     font-size: 12px;
+    font-weight: 400;
     color: var(--muted);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.02em;
   }
 
   .status-dot {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: #5C9E6E;
-    animation: pulse 2s ease-in-out infinite;
+    background: #34C759;
+    animation: pulse 2.2s ease-in-out infinite;
   }
 
   @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(0.85); }
   }
 
-  .hero-skills {
-    padding-top: 1rem;
-  }
+  /* Skills sidebar */
+  .hero-skills { padding-top: 0.25rem; }
 
   .skills-col-label {
     font-size: 10px;
-    letter-spacing: 0.12em;
+    font-weight: 600;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: #555;
     margin-bottom: 0.75rem;
   }
 
   .skills-list {
     font-size: 13px;
-    color: var(--black);
-    line-height: 2;
-    font-weight: 300;
+    font-weight: 400;
+    color: var(--muted);
+    line-height: 1.7;
     margin-bottom: 2rem;
+    letter-spacing: -0.01em;
   }
 
-  /* === PROJECT SECTIONS === */
-  .project-section {
-    background: var(--bg);
+  /* ═══════════════════════════════════════
+     CHAPTER STRUCTURE
+  ═══════════════════════════════════════ */
+
+  .chapter-divider {
+    width: 100%;
+    height: 0.5px;
+    background: var(--border);
   }
 
-  .project-section.dark {
-    background: var(--black);
+  .chapter-intro {
+    padding: 6rem 2.5rem;
+  }
+
+  .chapter-intro.dark {
+    background: #111113;
     color: var(--white);
   }
 
-  .project-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
+  .chapter-intro.tinted { background: #EBEBED; }
+
+  /* Compact variant — half-height metadata strip */
+  .chapter-intro.compact {
+    padding: 5rem 2.5rem;
+  }
+
+  .chapter-intro.compact .chapter-intro-inner {
+    grid-template-columns: 2fr 3fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .chapter-intro.compact .project-meta {
+    gap: 0.5rem;
+  }
+
+  .chapter-intro.compact .project-name {
+    font-size: clamp(22px, 2.2vw, 32px);
+    white-space: nowrap;
+    letter-spacing: -0.03em;
+  }
+
+  .chapter-intro.compact .project-detail {
+    gap: 1.25rem;
+  }
+
+  .chapter-intro.compact .project-desc {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .chapter-intro-inner {
+    max-width: 1100px;
+    margin: 0 10rem 0 6rem;
+    width: calc(100% - 16rem);
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 5rem;
-    align-items: center;
-    padding: 0 2.5rem;
+    align-items: start;
   }
 
-  .project-inner.full {
+  .chapter-intro-inner.solo {
     grid-template-columns: 1fr;
-    max-width: 900px;
+    max-width: 680px;
   }
 
-  .project-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
+  /* Project meta */
+  .project-meta { display: flex; flex-direction: column; gap: 0.8rem; }
 
   .project-number {
     font-size: 10px;
-    letter-spacing: 0.14em;
+    font-weight: 500;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--muted);
   }
-
-  .dark .project-number { color: rgba(255,255,255,0.4); }
+  .dark .project-number { color: rgba(255,255,255,0.35); }
 
   .project-name {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(36px, 5vw, 64px);
-    font-weight: 400;
-    line-height: 1.05;
-    letter-spacing: -0.025em;
+    font-size: clamp(42px, 5.5vw, 72px);
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -0.04em;
+    color: var(--black);
   }
-
   .dark .project-name { color: var(--white); }
-
-  .project-name em {
-    font-style: italic;
-    color: var(--accent);
-  }
 
   .project-context {
     font-size: 13px;
+    font-weight: 400;
     color: var(--muted);
-    font-weight: 300;
-    line-height: 1.5;
+    letter-spacing: -0.01em;
   }
-
-  .dark .project-context { color: rgba(255,255,255,0.45); }
+  .dark .project-context { color: rgba(255,255,255,0.4); }
 
   .project-desc {
-    font-size: 15px;
-    line-height: 1.7;
-    font-weight: 300;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.65;
     color: var(--black);
-    max-width: 480px;
+    letter-spacing: -0.01em;
   }
+  .dark .project-desc { color: rgba(255,255,255,0.7); }
 
-  .dark .project-desc { color: rgba(255,255,255,0.75); }
+  .project-detail { display: flex; flex-direction: column; gap: 2rem; }
 
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 0.5rem;
-  }
+  /* Tags */
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
 
   .tag {
     font-size: 10px;
-    letter-spacing: 0.08em;
+    font-weight: 500;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     padding: 5px 12px;
     border: 0.5px solid var(--border);
-    border-radius: 100px;
+    border-radius: 980px;
     color: var(--muted);
   }
-
   .dark .tag {
-    border-color: rgba(255,255,255,0.15);
-    color: rgba(255,255,255,0.45);
+    border-color: rgba(255,255,255,0.14);
+    color: rgba(255,255,255,0.4);
   }
 
-  /* IMAGE PLACEHOLDERS */
-  .project-visual {
+  /* Highlight cards (WGAC) */
+  .highlight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .highlight-card {
+    background: rgba(0,0,0,0.04);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+  .highlight-card-title {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+    color: var(--black);
+  }
+  .highlight-card-desc {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ═══════════════════════════════════════
+     MODULES
+  ═══════════════════════════════════════ */
+
+  /* Full-bleed — edge to edge, zero gap */
+  .module--full-bleed {
+    width: 100%;
+    display: block;
+    line-height: 0;
+    font-size: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .module--full-bleed img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Forced viewport height */
+  .module--full-bleed.tall img,
+  .module--full-bleed.tall .img-placeholder {
+    height: 80vh;
+  }
+
+  /* Contained — centred, guttered */
+  .module--contained {
+    padding: 4rem 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .module--contained img {
+    width: 100%;
+    height: auto;
+    display: block;
     border-radius: 12px;
-    overflow: hidden;
-    background: rgba(0,0,0,0.06);
-    position: relative;
   }
 
-  .dark .project-visual { background: rgba(255,255,255,0.06); }
-
-  .project-visual img {
+  /* Duo */
+  .module--duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    align-items: stretch;
+  }
+  .module--duo img {
     width: 100%;
     height: 100%;
+    min-height: 300px;
     object-fit: cover;
     display: block;
   }
 
-  .img-placeholder {
+  /* Trio */
+  .module--trio {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3px;
+  }
+  .module--trio img {
     width: 100%;
     aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Split — image + text */
+  .module--split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+  .module--split img {
+    width: 100%;
+    min-height: 400px;
+    object-fit: cover;
+    display: block;
+  }
+  .module--split .split-text {
+    padding: 4rem;
+  }
+  .module--split .split-text p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--muted);
+    letter-spacing: -0.01em;
+  }
+
+  /* Caption */
+  .module--caption {
+    padding: 2.5rem 2.5rem;
+    max-width: 780px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .module--caption p {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--subtle);
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+  }
+
+  /* Pull quote */
+  .module--pullquote {
+    padding: 6rem 2.5rem;
+    text-align: center;
+    max-width: 860px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .module--pullquote p {
+    font-size: clamp(22px, 3vw, 38px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+    color: var(--black);
+  }
+
+  /* Image placeholder */
+  .img-placeholder {
+    background: rgba(0,0,0,0.035);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    gap: 8px;
-  }
-
-  .img-placeholder span {
-    font-size: 11px;
+    gap: 10px;
+    color: var(--subtle);
+    font-size: 10px;
+    font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--muted);
-    opacity: 0.5;
-  }
-
-  /* VIDEO EMBED */
-  .video-wrap {
-    border-radius: 12px;
-    overflow: hidden;
-    aspect-ratio: 16/9;
-    background: #000;
-  }
-
-  .video-wrap iframe {
     width: 100%;
-    height: 100%;
-    border: none;
-    display: block;
   }
 
-  /* MAKING THINGS — GRID */
+  /* ═══════════════════════════════════════
+     MAKING GRID
+  ═══════════════════════════════════════ */
+
   .making-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    margin-top: 2rem;
+    gap: 3px;
   }
 
   .making-cell {
-    background: var(--bg);
-    aspect-ratio: 1;
     overflow: hidden;
+    aspect-ratio: 1;
   }
 
   .making-cell img {
@@ -368,125 +605,67 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.4s ease;
+    transition: transform 0.55s ease;
   }
-
   .making-cell:hover img { transform: scale(1.04); }
 
-  /* CONTACT */
+  /* ═══════════════════════════════════════
+     CONTACT
+  ═══════════════════════════════════════ */
+
   #contact {
-    background: var(--black);
+    background: #111113;
     color: var(--white);
-    min-height: 100vh;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    padding: 6rem 2.5rem;
   }
 
   .contact-inner {
     max-width: 900px;
     margin: 0 auto;
-    padding: 0 2.5rem;
+    width: 100%;
   }
 
   .contact-eyebrow {
-    font-size: 11px;
+    font-size: 10px;
+    font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.35);
+    color: rgba(255,255,255,0.3);
     margin-bottom: 2rem;
   }
 
   .contact-prompt {
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 400;
     color: rgba(255,255,255,0.4);
-    font-weight: 300;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
   }
 
   .contact-email {
-    font-family: 'DM Serif Display', serif;
     font-size: clamp(36px, 6vw, 80px);
-    font-weight: 400;
+    font-weight: 700;
+    letter-spacing: -0.04em;
     color: var(--white);
     text-decoration: none;
-    letter-spacing: -0.03em;
     line-height: 1;
     display: inline-block;
-    border-bottom: 2px solid var(--accent);
-    transition: color 0.2s;
+    border-bottom: 1.5px solid rgba(255,255,255,0.25);
+    transition: border-color 0.2s;
   }
-
-  .contact-email:hover { color: var(--accent); }
+  .contact-email:hover { border-color: var(--white); }
 
   .contact-footer {
-    margin-top: 4rem;
+    margin-top: 5rem;
     padding-top: 2rem;
-    border-top: 0.5px solid rgba(255,255,255,0.1);
+    border-top: 0.5px solid rgba(255,255,255,0.08);
     font-size: 12px;
-    color: rgba(255,255,255,0.25);
-    letter-spacing: 0.04em;
-  }
-
-  /* SECTION DIVIDER */
-  .section-rule {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    height: 0.5px;
-    background: var(--border);
-  }
-
-  /* FADE IN ON SCROLL */
-  .fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .fade-in:nth-child(2) { transition-delay: 0.1s; }
-  .fade-in:nth-child(3) { transition-delay: 0.2s; }
-  .fade-in:nth-child(4) { transition-delay: 0.3s; }
-
-  /* WGAC highlight */
-  .wgac-items {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 1.5rem;
-  }
-
-  .wgac-item {
-    background: rgba(0,0,0,0.04);
-    border-radius: 8px;
-    padding: 1rem 1.25rem;
-  }
-
-  .wgac-item-title {
-    font-size: 13px;
-    font-weight: 500;
-    margin-bottom: 4px;
-  }
-
-  .wgac-item-desc {
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 300;
-    line-height: 1.5;
-  }
-
-  /* SCROLL PROGRESS */
-  .progress-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 2px;
-    background: var(--accent);
-    z-index: 200;
-    transition: width 0.1s linear;
-    width: 0%;
+    font-weight: 400;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.02em;
   }
 
 </style>
@@ -495,270 +674,774 @@
 
 <div class="progress-bar" id="progress"></div>
 
-<nav>
-  <div class="nav-name">Luke Purser <span>— Creative Designer & Builder</span></div>
-  <a href="mailto:lukepurser@me.com" class="nav-contact">Get in touch</a>
+<!-- ─── TOP NAV ─── -->
+<nav id="nav">
+  <div class="nav-name">Luke Purser</div>
+  <span class="nav-centre">Multidisciplined Designer & Builder</span>
+  <a href="mailto:lukepurser@me.com" class="nav-cta">Get in touch</a>
 </nav>
 
-<!-- ===== HERO ===== -->
+<!-- ─── RIGHT-SIDE CHAPTER NAV ─── -->
+<nav class="chapter-nav" id="chapterNav" aria-label="Page sections">
+  <a href="#hero"     class="chapter-nav-item active" data-target="hero">
+    <span class="chapter-nav-label">Intro</span>
+    <span class="chapter-nav-marker"></span>
+  </a>
+  <a href="#nourish"  class="chapter-nav-item" data-target="nourish">
+    <span class="chapter-nav-label">Nourish Ingredients</span>
+    <span class="chapter-nav-marker"></span>
+  </a>
+  <a href="#wgac"     class="chapter-nav-item" data-target="wgac">
+    <span class="chapter-nav-label">Who Gives A Crap</span>
+    <span class="chapter-nav-marker"></span>
+  </a>
+  <a href="#jobquote" class="chapter-nav-item" data-target="jobquote">
+    <span class="chapter-nav-label">AutoQuote</span>
+    <span class="chapter-nav-marker"></span>
+  </a>
+  <a href="#minimetas" class="chapter-nav-item" data-target="minimetas">
+    <span class="chapter-nav-label">Minimetas</span>
+    <span class="chapter-nav-marker"></span>
+  </a>
+  <a href="#making"   class="chapter-nav-item" data-target="making">
+    <span class="chapter-nav-label">Hey Neon</span>
+    <span class="chapter-nav-marker"></span>
+  </a>
+  <a href="#contact"  class="chapter-nav-item" data-target="contact">
+    <span class="chapter-nav-label">Contact</span>
+    <span class="chapter-nav-marker"></span>
+  </a>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
 <section id="hero">
   <div class="hero-inner">
     <div>
-      <p class="hero-eyebrow fade-in">Sydney, Australia · Available now</p>
-      <h1 class="hero-statement fade-in">
-        Hi, I'm Luke.<br>
-        I make brands look good,<br>
-        products work properly,<br>
-        and occasionally bend<br>
-        <em>neon into weird shapes.</em>
-      </h1>
+      <h1 class="hero-name fade-in">Luke Purser</h1>
+      <p class="hero-title fade-in">Multidisciplined Designer<br>&amp; Builder</p>
       <p class="hero-sub fade-in">
-        Six years building things that live at the intersection of design, digital and "wait, you built that yourself?" — across food-tech, consumer goods, and things I made at 11pm for fun.
+        Hi 👋 Thanks for taking a look at my work.
+
+        I&#8217;m a multidisciplinary designer and creative lead with experience across some of Australia&#8217;s leading D2C and B2B brands, both agency-side and in-house. I&#8217;ve worked across brand systems, campaigns, product experiences and creative strategy, helping teams turn ideas into work that&#8217;s clear, useful and commercially effective. I care about craft, but I also value speed, momentum and getting work into the world. The best creative teams know when to refine and when to ship.
+
+        I enjoy working closely with ambitious founders, marketers and product teams to build things end-to-end, especially in fast-paced environments where adaptability matters. Curious, practical and highly hands-on, I&#8217;m happiest making things that move businesses and people forward.
+
+        Looking forward to meeting you.
       </p>
-      <div class="hero-status fade-in">
-        <div class="status-dot"></div>
-        Open to new roles
-      </div>
     </div>
     <div class="hero-skills fade-in">
-      <p class="skills-col-label">As a designer</p>
-      <div class="skills-list">
-        Brand Identity<br>
-        Art Direction<br>
-        Campaign Design<br>
-        Motion & GIFs<br>
-        Editorial & Print<br>
-        Photography Direction<br>
-        Illustration
-      </div>
-      <p class="skills-col-label">As a builder</p>
-      <div class="skills-list">
-        Web & Funnels<br>
-        No-Code Platforms<br>
-        Automation & CRM<br>
-        Product Design<br>
-        Systems Thinking<br>
-        Figma · Adobe Suite
+      <div class="hero-skills-grid">
+        <div>
+          <p class="skills-col-label">Designer</p>
+          <div class="skills-list">
+            Graphic Design<br>
+            Digital UI/UX<br>
+            Art Direction<br>
+            Campaign Design<br>
+            Illustration &amp; GIFs<br>
+            Editorial &amp; Print<br>
+            Photography Direction<br>
+            Retouching
+          </div>
+        </div>
+        <div>
+          <p class="skills-col-label">Builder</p>
+          <div class="skills-list">
+            Building Funnels<br>
+            No-Code Platforms<br>
+            Automations &amp; CRM<br>
+            Prototyping &amp; AB Testing<br>
+            Product Design<br>
+            Systems Thinking
+          </div>
+        </div>
+        <div class="hero-roles">
+          <p class="skills-col-label">Previous Roles</p>
+          <div class="skills-list" style="margin-bottom:0;">
+            Nourish Ingredients<br>
+            Who Gives A Crap<br>
+            M&amp;C Saatchi Sydney<br>
+            Leo Burnett Sydney
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="scroll-hint">
-    <span>Scroll</span>
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M8 3v10M8 13l-4-4M8 13l4-4" stroke="#111110" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
 </section>
 
-<!-- ===== NOURISH INGREDIENTS ===== -->
-<section id="nourish" class="project-section dark">
-  <div class="project-inner">
+
+<!-- ═══════════════════════════════════════════
+     01 · NOURISH INGREDIENTS
+═══════════════════════════════════════════ -->
+<div class="chapter-divider"></div>
+
+<!-- ╌╌ NOURISH MODULES ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
+
+<!-- NI_01 — wow moment first -->
+<div id="nourish" class="module--full-bleed">
+  <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/1.webp" alt="Nourish Ingredients brand overview">
+</div>
+
+<!-- Compact copy block — after the image -->
+<div class="chapter-intro compact">
+  <div class="chapter-intro-inner">
     <div class="project-meta">
-      <p class="project-number fade-in">01 / Nourish Ingredients · 2022–2024</p>
-      <h2 class="project-name fade-in">Full<br>Brand<br><em>Build</em></h2>
-      <p class="project-context fade-in">Senior Designer · Food-tech startup</p>
+      <p class="project-number fade-in">2023–2026</p>
+      <h2 class="project-name fade-in">Nourish Ingredients</h2>
+      <p class="project-context fade-in">Head of Design · Food-tech startup B2B</p>
+    </div>
+    <div class="project-detail">
       <p class="project-desc fade-in">
-        Brand identity to funnels — built end to end. Logo, tone of voice, product naming, photography, brand guidelines microsite, HubSpot integration, emails. The kind of project where you touch everything and nothing comes back broken.
+        Nourish Ingredients is creating animal-free fats through precision fermentation, a technically ambitious company in the Australian food sector. Brought in as Head of Design, I rebuilt the brand from the ground up: a complete identity system, tone of voice, product architecture, packaging, photography direction, website, sales automations, investor decks and internal templates. Working alongside the C-suite and Head of Marketing, the result was a brand that made deep tech feel desirable and helped establish Nourish Ingredients as a leader in novel food.
       </p>
       <div class="tags fade-in">
-        <span class="tag">Brand Identity</span>
-        <span class="tag">Naming</span>
-        <span class="tag">Product Design</span>
-        <span class="tag">Photography</span>
-        <span class="tag">Web</span>
-        <span class="tag">Automation</span>
-      </div>
-    </div>
-    <div class="project-visual fade-in">
-      <!-- REPLACE src with your Cloudinary image URL -->
-      <div class="img-placeholder">
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" opacity="0.3">
-          <rect x="2" y="2" width="28" height="28" rx="4" stroke="#F5F4F0" stroke-width="1.5"/>
-          <circle cx="11" cy="12" r="3" stroke="#F5F4F0" stroke-width="1.5"/>
-          <path d="M2 22l8-6 6 5 5-4 9 7" stroke="#F5F4F0" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-        <span>Nourish visual</span>
+        <span class="tag">Branding</span>
+        <span class="tag">Art Direction</span>
+        <span class="tag">Digital</span>
+        <span class="tag">Signage</span>
       </div>
     </div>
   </div>
-  <div class="scroll-hint">
-    <span>Next</span>
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M8 3v10M8 13l-4-4M8 13l4-4" stroke="#F5F4F0" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
-</section>
+</div>
 
-<!-- ===== WHO GIVES A CRAP ===== -->
-<section id="wgac" class="project-section">
-  <div class="project-inner">
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/2.webp" alt=""></div>
+<div style="background:#000; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
+  <video id="ni03-video" autoplay loop muted playsinline style="width:60%; display:block; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px;">
+    <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/3.mp4" type="video/mp4">
+  </video>
+</div>
+<script>
+  (function(){
+    var v = document.getElementById('ni03-video');
+    function setSpeed(){ v.playbackRate = 2.0; }
+    v.addEventListener('loadedmetadata', setSpeed);
+    v.addEventListener('play', setSpeed);
+    if(v.readyState >= 1) setSpeed();
+  })();
+</script>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/4.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/5.webp" alt=""></div>
+<div style="background:#000; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
+  <video autoplay loop muted playsinline style="width:70%; display:block; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px;">
+    <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/6.mp4" type="video/mp4">
+  </video>
+</div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/7.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/8.webp" alt=""></div>
+<!-- Product copy block — separates brand and product chapters -->
+<div class="chapter-intro compact tinted">
+  <div class="chapter-intro-inner">
     <div class="project-meta">
-      <p class="project-number fade-in">02 / Who Gives A Crap · 2019–2022</p>
-      <h2 class="project-name fade-in">Campaigns<br>& <em>Content</em></h2>
-      <p class="project-context fade-in">In-house Designer · Consumer brand</p>
+      <p class="project-number fade-in">2023–2026</p>
+      <h2 class="project-name fade-in">Nourish Ingredients:<br>Product</h2>
+      <p class="project-context fade-in">Head of Design · Food-tech startup B2B</p>
+    </div>
+    <div class="project-detail">
       <p class="project-desc fade-in">
-        Three years in-house across brand, campaigns, social and product. Blog build-out, special edition product launches, paid ad videos, and — personal favourite — a physical newspaper I designed and illustrated myself.
-      </p>
-      <div class="wgac-items fade-in">
-        <div class="wgac-item">
-          <p class="wgac-item-title">The Daily Crap</p>
-          <p class="wgac-item-desc">Physical newspaper. Designed & illustrated by me.</p>
-        </div>
-        <div class="wgac-item">
-          <p class="wgac-item-title">Special Editions ×2</p>
-          <p class="wgac-item-desc">Landing pages, eDMs, gifts, key art.</p>
-        </div>
-        <div class="wgac-item">
-          <p class="wgac-item-title">Paid Ads</p>
-          <p class="wgac-item-desc">Video, social GIFs, motion.</p>
-        </div>
-        <div class="wgac-item">
-          <p class="wgac-item-title">Blog Build-out</p>
-          <p class="wgac-item-desc">Look, feel and editorial structure.</p>
-        </div>
-      </div>
-      <div class="tags fade-in">
-        <span class="tag">Campaign</span>
-        <span class="tag">Motion</span>
-        <span class="tag">Editorial</span>
-        <span class="tag">Illustration</span>
-        <span class="tag">Social</span>
-      </div>
-    </div>
-    <div class="project-visual fade-in">
-      <div class="img-placeholder">
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" opacity="0.2">
-          <rect x="2" y="2" width="28" height="28" rx="4" stroke="#111110" stroke-width="1.5"/>
-          <circle cx="11" cy="12" r="3" stroke="#111110" stroke-width="1.5"/>
-          <path d="M2 22l8-6 6 5 5-4 9 7" stroke="#111110" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-        <span>WGAC visual</span>
-      </div>
-    </div>
-  </div>
-  <div class="scroll-hint">
-    <span>Next</span>
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M8 3v10M8 13l-4-4M8 13l4-4" stroke="#111110" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
-</section>
-
-<!-- ===== JOB QUOTE ===== -->
-<section id="jobquote" class="project-section" style="background: #EEECEA;">
-  <div class="project-inner">
-    <div class="project-visual fade-in" style="order: -1;">
-      <div class="img-placeholder">
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" opacity="0.2">
-          <rect x="2" y="2" width="28" height="28" rx="4" stroke="#111110" stroke-width="1.5"/>
-          <path d="M8 10h16M8 16h10M8 22h12" stroke="#111110" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-        <span>Job Quote visual</span>
-      </div>
-    </div>
-    <div class="project-meta">
-      <p class="project-number fade-in">03 / Job Quote · Side project</p>
-      <h2 class="project-name fade-in">End-to-end<br><em>Product</em><br>Build</h2>
-      <p class="project-context fade-in">Solo build · Trades & service businesses</p>
-      <p class="project-desc fade-in">
-        Quoting tool built for a trades business — form, automation, CRM, pricing logic, subscription model. Ready to deploy. The tiler had other plans.
+        Tastilux® and Creamilux® are two proprietary fat ingredients made to compete on taste. I created both names and built everything around them: packaging, sampling events, product landing pages, sales decks and automated funnels that moved prospects from awareness to qualified lead.
       </p>
       <div class="tags fade-in">
-        <span class="tag">Product Design</span>
-        <span class="tag">Automation</span>
-        <span class="tag">Forms</span>
-        <span class="tag">CRM</span>
-        <span class="tag">Systems Thinking</span>
+        <span class="tag">Product Naming</span>
+        <span class="tag">Packaging</span>
+        <span class="tag">Landing Pages</span>
+        <span class="tag">Sampling</span>
       </div>
     </div>
   </div>
-  <div class="scroll-hint">
-    <span>Next</span>
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M8 3v10M8 13l-4-4M8 13l4-4" stroke="#111110" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
-</section>
+</div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/10.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/11.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/12.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/13.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/14.webp" alt=""></div>
+<div style="background:#FF3D3D; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
+  <video autoplay loop muted playsinline style="width:70%; display:block; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; box-shadow: 0 32px 80px rgba(0,0,0,0.35);">
+    <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/15.mp4" type="video/mp4">
+  </video>
+</div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/16.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/17.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/18.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/19.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/20.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/21.webp" alt=""></div>
+<div style="background:#0D6DFF; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
+  <video autoplay loop muted playsinline style="width:70%; display:block; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; box-shadow: 0 32px 80px rgba(0,0,0,0.35);">
+    <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/22.mp4" type="video/mp4">
+  </video>
+</div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/23.webp" alt=""></div>
 
-<!-- ===== MAKING THINGS ===== -->
-<section id="making" class="project-section">
-  <div style="max-width: 1200px; margin: 0 auto; width: 100%; padding: 0 2.5rem;">
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;">
-      <div class="project-meta">
-        <p class="project-number fade-in">04 / Making Things · Ongoing</p>
-        <h2 class="project-name fade-in">Craft,<br>Code &<br><em>Curiosity</em></h2>
-        <p class="project-desc fade-in" style="margin-top: 1rem;">
-          3D character design, handmade neon art, NFT collection. Things built at 11pm because the brief was interesting. Shows up in the work.
-        </p>
-        <div style="margin-top: 1.5rem;" class="fade-in">
-          <p class="skills-col-label">Minimetas — NFT collection</p>
-          <p style="font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.6; margin-bottom: 1.5rem;">Digital art, animated GIFs, web3. Built during the moment, still proud of the work.</p>
-          <p class="skills-col-label">Neon Art — physical making</p>
-          <p style="font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.6; margin-bottom: 1.5rem;">Designed, bent and built by hand. Proof that the making instinct isn't just digital.</p>
-          <p class="skills-col-label">3D Design — character renders</p>
-          <p style="font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.6;">Foundations of form and spatial thinking — no AI, just craft.</p>
-        </div>
-        <div class="tags fade-in" style="margin-top: 1.5rem;">
-          <span class="tag">3D</span>
-          <span class="tag">Fabrication</span>
-          <span class="tag">NFT</span>
-          <span class="tag">Motion</span>
-          <span class="tag">Art</span>
-        </div>
-      </div>
-      <div class="fade-in">
-        <div class="making-grid">
-          <!-- REPLACE these src with your Cloudinary image URLs -->
-          <div class="making-cell"><div class="img-placeholder" style="aspect-ratio:1;"><span>Neon 1</span></div></div>
-          <div class="making-cell"><div class="img-placeholder" style="aspect-ratio:1;"><span>Neon 2</span></div></div>
-          <div class="making-cell"><div class="img-placeholder" style="aspect-ratio:1;"><span>3D</span></div></div>
-          <div class="making-cell"><div class="img-placeholder" style="aspect-ratio:1;"><span>NFT 1</span></div></div>
-          <div class="making-cell"><div class="img-placeholder" style="aspect-ratio:1;"><span>NFT 2</span></div></div>
-          <div class="making-cell"><div class="img-placeholder" style="aspect-ratio:1;"><span>Neon 3</span></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="scroll-hint">
-    <span>Next</span>
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M8 3v10M8 13l-4-4M8 13l4-4" stroke="#111110" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
-</section>
 
-<!-- ===== CONTACT ===== -->
-<section id="contact">
-  <div class="contact-inner">
-    <p class="contact-eyebrow fade-in">05 / Say hello</p>
-    <p class="contact-prompt fade-in">Job offers, interesting briefs, or questions about neon — via</p>
-    <a href="mailto:lukepurser@me.com" class="contact-email fade-in">lukepurser@me.com</a>
-    <div class="contact-footer fade-in">
-      Luke Purser · Sydney, Australia · 2025
+<!-- ═══════════════════════════════════════════
+     02 · WHO GIVES A CRAP
+═══════════════════════════════════════════ -->
+<div class="chapter-divider"></div>
+
+<div id="wgac" class="module--full-bleed">
+  <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/1.webp" alt="Who Gives A Crap brand campaigns">
+</div>
+
+<div class="chapter-intro compact">
+  <div class="chapter-intro-inner">
+    <div class="project-meta">
+      <p class="project-number fade-in">2018–2020</p>
+      <h2 class="project-name fade-in">Who Gives A Crap</h2>
+      <p class="project-context fade-in">Design Lead · Toilet Paper Subscription B2C</p>
+    </div>
+    <div class="project-detail">
+      <p class="project-desc fade-in">
+        I moved to Los Angeles to sell toilet paper. Who Gives A Crap relocated their team during a period of rapid growth and expansion into the US and Europe. As an integrated designer in a fast, scrappy environment, I worked across campaigns, limited editions, socials, Impact and eDMs. I built out their first blog, Talking Crap, hired and directed a video team as they moved heavy into paid Facebook ads, and established systems for rapid ideation and thumb-stopping content. This role sharpened my understanding of performance design: how to move fast, stay creative and connect output to sales metrics.
+      </p>
+      <div class="tags fade-in">
+        <span class="tag">Design &amp; Art Direction</span>
+        <span class="tag">Illustration &amp; GIFs</span>
+        <span class="tag">Digital</span>
+        <span class="tag">Paid Ads</span>
+        <span class="tag">A/B Testing</span>
+      </div>
     </div>
   </div>
-</section>
+</div>
+
+<!-- ╌╌ WGAC MODULES ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
+<div class="module--full-bleed" style="position:relative;">
+  <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/2.gif" alt="">
+  <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/2b.gif" alt="" style="position:absolute; top:50%; left:calc(5% + 8px); transform:translateY(-50%); width:25%; pointer-events:none;">
+</div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/3.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/4.webp" alt=""></div>
+<div style="background:#FDBB1F; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
+  <video autoplay loop muted playsinline style="width:70%; display:block; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; box-shadow: 0 32px 80px rgba(0,0,0,0.35);">
+    <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/5.mp4" type="video/mp4">
+  </video>
+</div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/6.webp" alt=""></div>
+
+<!-- ╌╌ WGAC PAID ADS GRID ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
+<div style="background:#EEEEE9; padding: 7rem 0;">
+  <div style="max-width: 80%; margin: 0 auto; display:grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding: 0 2rem;">
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline preload="metadata">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_1.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline preload="metadata">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_2.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline preload="metadata">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_3.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline preload="metadata">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_4.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline preload="metadata">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_5.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline preload="metadata">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_6.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline preload="metadata">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_7.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline preload="metadata">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_8.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline preload="metadata">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_9.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline preload="metadata">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_10.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline preload="metadata">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_11.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline preload="metadata">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_12.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .pa-cell {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    cursor: pointer;
+  }
+  .pa-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.01);
+  }
+  .pa-btn {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .pa-btn svg {
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+    transition: transform 0.15s;
+  }
+  .pa-btn:hover svg {
+    transform: scale(1.1);
+  }
+  .pa-cell.playing .pa-btn {
+    opacity: 0;
+  }
+  .pa-cell.playing:hover .pa-btn {
+    opacity: 1;
+  }
+  .pa-cell.playing .pa-btn svg polygon {
+    points: "16,13 16,35 22,35 22,13 26,13 26,35 32,35 32,13";
+  }
+</style>
 
 <script>
-  // Progress bar
+  (function() {
+    var pauseIcon = '<svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><rect x="14" y="13" width="7" height="22" rx="1.5" fill="#fff"/><rect x="27" y="13" width="7" height="22" rx="1.5" fill="#fff"/></svg>';
+    var playIcon  = '<svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>';
+
+    document.querySelectorAll('.pa-cell').forEach(function(cell) {
+      var video = cell.querySelector('.pa-video');
+      var btn   = cell.querySelector('.pa-btn');
+
+      cell.addEventListener('click', function() {
+        if (video.paused) {
+          video.play();
+          cell.classList.add('playing');
+          btn.innerHTML = pauseIcon;
+        } else {
+          video.pause();
+          cell.classList.remove('playing');
+          btn.innerHTML = playIcon;
+        }
+      });
+
+      video.addEventListener('ended', function() {
+        cell.classList.remove('playing');
+        btn.innerHTML = playIcon;
+      });
+    });
+  })();
+</script>
+
+
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/7.webp" alt=""></div>
+<div style="background:#9CE3FF; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
+  <video id="wgac08-video" autoplay loop muted playsinline style="width:70%; display:block; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; box-shadow: 0 32px 80px rgba(0,0,0,0.35);">
+    <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/8.mp4" type="video/mp4">
+  </video>
+</div>
+<script>
+  (function(){
+    var v = document.getElementById('wgac08-video');
+    function setSpeed(){ v.playbackRate = 1.5; }
+    v.addEventListener('loadedmetadata', setSpeed);
+    v.addEventListener('play', setSpeed);
+    if(v.readyState >= 1) setSpeed();
+  })();
+</script>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/9.webp" alt=""></div>
+
+<!-- ╌╌ WGAC GIF GRID ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
+<div style="background:#EEEEE9; padding: 7rem 0;">
+  <div style="max-width: 80%; margin: 0 auto; display:grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding: 0 2rem;">
+
+    <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/10_1.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.01);">
+    </div>
+    <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/10_2.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.01);">
+    </div>
+    <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/10_3.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.01);">
+    </div>
+    <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/10_4.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.01);">
+    </div>
+    <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/10_5.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.01);">
+    </div>
+    <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/10_6.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.01);">
+    </div>
+
+  </div>
+</div>
+
+
+<div class="module--full-bleed" style="position:relative;">
+  <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/11.webp" alt="">
+  <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/11b.gif" alt="" style="position:absolute; top:35.5%; left:51%; transform:translate(-50%, -50%); width:38.5%; pointer-events:none;">
+</div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/12.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/13.webp" alt=""></div>
+
+<!-- ═══════════════════════════════════════════
+     03 · JOB QUOTE
+═══════════════════════════════════════════ -->
+<div class="chapter-divider"></div>
+
+<div id="jobquote" class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/autoquote/1.webp" alt="Job Quote"></div>
+
+<div class="chapter-intro compact">
+  <div class="chapter-intro-inner">
+    <div class="project-meta">
+      <p class="project-number fade-in">2026</p>
+      <h2 class="project-name fade-in">AutoQuote</h2>
+      <p class="project-context fade-in">Solo build · Service business</p>
+    </div>
+    <div class="project-detail">
+      <p class="project-desc fade-in">
+        Getting a trade to quote shouldn&#8217;t be hard. But it can be frustrating chasing availability, no-shows, and waiting days for a price. On the other side, tradies are losing hours quoting jobs that were never going to happen, time they&#8217;d rather spend on the tools. AutoQuote is a quoting and job management tool built for trades and service businesses, with a focus on meterage-based work: tilers, carpet installers, painters. I designed the product from the ground up with one clear goal: make it feel fast and easy for both sides. That meant prioritisation, fewer fields, cleaner flows, and a mobile-first experience built for people who work on-site. This case study maps the end-to-end journey, UX decisions, and system thinking. Try it: <a href="https://tally.so/r/jaZLOQ" target="_blank" rel="noopener" style="color:#0070D7; text-decoration:underline; text-underline-offset:3px;">tally.so/r/jaZLOQ</a>
+      </p>
+      <div class="tags fade-in">
+        <span class="tag">Product Design</span>
+        <span class="tag">UX Design</span>
+        <span class="tag">No-Code</span>
+        <span class="tag">Automation</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╌╌ JOB QUOTE MODULES ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/autoquote/2.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/autoquote/3.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/autoquote/4.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/autoquote/5.webp" alt=""></div>
+
+<!-- ═══════════════════════════════════════════
+     04 · MINIMETAS
+═══════════════════════════════════════════ -->
+<div class="chapter-divider"></div>
+
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/1.webp" alt="Minimetas"></div>
+
+<div id="minimetas" class="chapter-intro compact">
+  <div class="chapter-intro-inner">
+    <div class="project-meta">
+      <p class="project-number fade-in">2020–2021</p>
+      <h2 class="project-name fade-in">Minimetas</h2>
+      <p class="project-context fade-in">Solo build · NFTs &amp; Web3</p>
+    </div>
+    <div class="project-detail">
+      <p class="project-desc fade-in">
+        I&#8217;ve collected art since I was a teenager. I was in the thick of the east London print scene, collecting screen prints from Pictures On Walls and arrived just slightly too late to snag the limited-edition Banksy runs. That buzz never left me: the drop, the rarity, the feeling of owning something made in short supply. When digital artists like Beeple started experimenting with blockchain, I immediately got it. Pixel art characters by CryptoPunks, generative work coming out of Art Blocks, it felt like the same energy. And like missing that Banksy, I also missed the multi-million dollar gold rush, nuts! But it was Covid lockdown, and I had time to explore and collect again. I mixed into the community and started minting a pixel art collection called the Minimetas: handcrafted pixel characters built and released into the wild.
+      </p>
+      <div class="tags fade-in">
+        <span class="tag">NFTs</span>
+        <span class="tag">Web3</span>
+        <span class="tag">X</span>
+        <span class="tag">Community</span>
+        <span class="tag">Digital Art</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╌╌ MINIMETAS MODULES ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/2.webp" alt=""></div>
+
+<div style="background:#270B55; padding: 9rem 4rem; display:flex; justify-content:center; align-items:center; gap: 2rem;">
+  <video autoplay loop muted playsinline style="width:27%; display:block; box-shadow: 0 32px 80px rgba(0,0,0,0.45);">
+    <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/3_1.mp4" type="video/mp4">
+  </video>
+  <video autoplay loop muted playsinline style="width:27%; display:block; box-shadow: 0 32px 80px rgba(0,0,0,0.45);">
+    <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/3_2.mp4" type="video/mp4">
+  </video>
+  <video autoplay loop muted playsinline style="width:27%; display:block; box-shadow: 0 32px 80px rgba(0,0,0,0.45);">
+    <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/3_3.mp4" type="video/mp4">
+  </video>
+</div>
+
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/4.webp" alt=""></div>
+
+<div style="background:#270B55; padding: 9rem 4rem;">
+  <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 80%; margin: 0 auto;">
+    <div style="overflow:hidden; aspect-ratio:1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/5_1.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
+    </div>
+    <div style="overflow:hidden; aspect-ratio:1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/5_2.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
+    </div>
+    <div style="overflow:hidden; aspect-ratio:1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/5_3.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
+    </div>
+    <div style="overflow:hidden; aspect-ratio:1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/5_4.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
+    </div>
+    <div style="overflow:hidden; aspect-ratio:1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/5_5.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
+    </div>
+    <div style="overflow:hidden; aspect-ratio:1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/5_6.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
+    </div>
+  </div>
+</div>
+
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/6.webp" alt=""></div>
+
+
+<!-- ═══════════════════════════════════════════
+     04 · HEY NEON
+═══════════════════════════════════════════ -->
+<div class="chapter-divider"></div>
+
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/1.webp" alt="Hey Neon"></div>
+
+<div id="making" class="chapter-intro compact">
+  <div class="chapter-intro-inner">
+    <div class="project-meta">
+      <p class="project-number fade-in">2020–Present</p>
+      <h2 class="project-name fade-in">Hey Neon</h2>
+      <p class="project-context fade-in">Solo build · Neon Maker</p>
+    </div>
+    <div class="project-detail">
+      <p class="project-desc fade-in">
+        I have a passion for illustration and vintage signage and neon lighting. All the stars aligned when I was living in Los Angeles right next to MONA, the Museum of Neon Art. I had the opportunity to work under a neon artist and study the art of neon fabrication and hand-bending glass over fire. It&#8217;s a craft that is dying out fast, with LEDs taking over, kept alive now mostly for artistic expression and nostalgia. There are only a small handful of makers left in Australia, and when I moved back I set up a small studio at home called Hey Neon to keep the passion project alive.
+      </p>
+      <div class="tags fade-in">
+        <span class="tag">Handmade</span>
+        <span class="tag">Glass Bending</span>
+        <span class="tag">Lighting</span>
+        <span class="tag">Signage</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╌╌ HEY NEON MODULES ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/2.webp" alt=""></div>
+
+<div style="background:#EEEEE9; padding: 7rem 4rem 2rem; display:flex; justify-content:center; align-items:flex-start; gap: 3rem;">
+  <div style="border-radius:16px; overflow:hidden;">
+    <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/3.webp" alt="Hey Neon neon sign" style="height:clamp(370px, 47vw, 693px); width:auto; display:block;">
+  </div>
+  <div style="border-radius:16px; overflow:hidden; height:clamp(370px, 47vw, 693px); aspect-ratio:9/16; flex-shrink:0; position:relative; cursor:pointer;" id="hn03-wrap">
+    <video id="hn03-vid" style="width:100%; height:100%; object-fit:cover; display:block;">
+      <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/3.mp4" type="video/mp4">
+    </video>
+    <div id="hn03-btn" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; transition:opacity 0.2s;">
+      <svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><polygon points="38,28 74,48 38,68" fill="#fff"/></svg>
+    </div>
+  </div>
+  <script>
+    (function(){
+      var wrap = document.getElementById('hn03-wrap');
+      var vid  = document.getElementById('hn03-vid');
+      var btn  = document.getElementById('hn03-btn');
+      var pauseSvg = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><rect x="28" y="26" width="14" height="44" rx="3" fill="#fff"/><rect x="54" y="26" width="14" height="44" rx="3" fill="#fff"/></svg>';
+      var playSvg  = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><polygon points="38,28 74,48 38,68" fill="#fff"/></svg>';
+      wrap.addEventListener('click', function(){
+        if(vid.paused){ vid.play(); btn.style.opacity='0'; } else { vid.pause(); btn.innerHTML=playSvg; btn.style.opacity='1'; }
+      });
+      wrap.addEventListener('mouseenter', function(){ if(!vid.paused){ btn.innerHTML=pauseSvg; btn.style.opacity='1'; } });
+      wrap.addEventListener('mouseleave', function(){ if(!vid.paused){ btn.style.opacity='0'; } });
+    })();
+  </script>
+</div>
+
+<div style="background:#EEEEE9; padding: 2rem 4rem 7rem; display:flex; justify-content:center; align-items:flex-start; gap: 3rem;">
+  <div style="border-radius:16px; overflow:hidden; height:clamp(370px, 47vw, 693px); aspect-ratio:9/16; flex-shrink:0; position:relative; cursor:pointer;" id="hn04-wrap">
+    <video id="hn04-vid" style="width:100%; height:100%; object-fit:cover; display:block;">
+      <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/4.mp4" type="video/mp4">
+    </video>
+    <div id="hn04-btn" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; transition:opacity 0.2s;">
+      <svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><polygon points="38,28 74,48 38,68" fill="#fff"/></svg>
+    </div>
+  </div>
+  <script>
+    (function(){
+      var wrap = document.getElementById('hn04-wrap');
+      var vid  = document.getElementById('hn04-vid');
+      var btn  = document.getElementById('hn04-btn');
+      var pauseSvg = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><rect x="28" y="26" width="14" height="44" rx="3" fill="#fff"/><rect x="54" y="26" width="14" height="44" rx="3" fill="#fff"/></svg>';
+      var playSvg  = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><polygon points="38,28 74,48 38,68" fill="#fff"/></svg>';
+      wrap.addEventListener('click', function(){
+        if(vid.paused){ vid.play(); btn.style.opacity='0'; } else { vid.pause(); btn.innerHTML=playSvg; btn.style.opacity='1'; }
+      });
+      wrap.addEventListener('mouseenter', function(){ if(!vid.paused){ btn.innerHTML=pauseSvg; btn.style.opacity='1'; } });
+      wrap.addEventListener('mouseleave', function(){ if(!vid.paused){ btn.style.opacity='0'; } });
+    })();
+  </script>
+  <div style="border-radius:16px; overflow:hidden;">
+    <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/4.webp" alt="Hey Neon" style="height:clamp(370px, 47vw, 693px); width:auto; display:block;">
+  </div>
+</div>
+
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/5.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/6.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/7.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/8.webp" alt=""></div>
+
+
+<!-- ═══════════════════════════════════════════
+     CONTACT
+═══════════════════════════════════════════ -->
+<div class="chapter-divider"></div>
+
+<section id="contact">
+  <div class="contact-inner">
+    <p class="contact-eyebrow fade-in">Say hello</p>
+    <a href="mailto:lukepurser@me.com" class="contact-email fade-in">lukepurser@me.com</a>
+  </div>
+</section>
+
+
+<script>
+  // ── Progress bar
   const progress = document.getElementById('progress');
   window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = (scrollTop / docHeight) * 100;
+    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
     progress.style.width = pct + '%';
-  });
+  }, { passive: true });
 
-  // Fade in on scroll
-  const faders = document.querySelectorAll('.fade-in');
+  // ── Nav: backdrop + smart hide/show on scroll direction
+  const navEl = document.getElementById('nav');
+  let lastScrollY = 0;
+
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+
+    // Backdrop
+    navEl.classList.toggle('scrolled', y > 50);
+
+    // Hide on scroll down, show on scroll up
+    if (y > lastScrollY && y > 80) {
+      navEl.classList.add('hidden');
+    } else {
+      navEl.classList.remove('hidden');
+    }
+    lastScrollY = y;
+  }, { passive: true });
+
+  // ── Fade in
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
       }
     });
-  }, { threshold: 0.1 });
-  faders.forEach(el => observer.observe(el));
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ── Chapter nav: active state + light/dark toggle
+  const chapterNav = document.getElementById('chapterNav');
+  const navItems   = Array.from(chapterNav.querySelectorAll('.chapter-nav-item'));
+
+  // Sections in scroll order for active-dot tracking
+  const sections = [
+    { id: 'hero'      },
+    { id: 'nourish'   },
+    { id: 'wgac'      },
+    { id: 'jobquote'  },
+    { id: 'minimetas' },
+    { id: 'making'    },
+    { id: 'contact'   },
+  ];
+
+  function updateChapterNav() {
+    const mid = window.scrollY + window.innerHeight * 0.45;
+    let active = sections[0];
+    for (const s of sections) {
+      const el = document.getElementById(s.id);
+      if (el && el.getBoundingClientRect().top + window.scrollY <= mid) active = s;
+    }
+    navItems.forEach(item => {
+      item.classList.toggle('active', item.dataset.target === active.id);
+    });
+  }
+
+  window.addEventListener('scroll', updateChapterNav, { passive: true });
+  updateChapterNav();
+
 </script>
 
 </body>
