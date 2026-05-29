@@ -231,10 +231,10 @@
     font-size: 17px;
     font-weight: 400;
     color: var(--muted);
-    line-height: 1.6;
+    line-height: 1.75;
     max-width: 740px;
     margin-bottom: 0;
-    letter-spacing: -0.01em;
+    letter-spacing: 0.002em;
   }
 
   /* Skills sidebar */
@@ -272,6 +272,8 @@
     0%, 100% { opacity: 1; transform: scale(1); }
     50%       { opacity: 0.5; transform: scale(0.85); }
   }
+
+  .hero-sub p + p { margin-top: 1.1em; }
 
   /* Skills sidebar */
   .hero-skills { padding-top: 0.25rem; }
@@ -848,15 +850,11 @@
     <div>
       <h1 class="hero-name fade-in">Luke Purser</h1>
       <p class="hero-title fade-in">Designer &amp; Builder</p>
-      <p class="hero-sub fade-in">
-        Hi 👋 Thanks for taking a look at my work.
-
-        I&#8217;m a multidisciplinary designer and creative lead with experience across some of Australia&#8217;s leading D2C and B2B brands, both agency-side and in-house. I&#8217;ve worked across brand systems, campaigns, product experiences and creative strategy, helping teams turn ideas into work that&#8217;s clear, useful and commercially effective. I care about craft, but I also value speed, momentum and getting work into the world. The best creative teams know when to refine and when to ship.
-
-        I enjoy working closely with ambitious founders, marketers and product teams to build things end-to-end, especially in fast-paced environments where adaptability matters. Curious, practical and highly hands-on, I&#8217;m happiest making things that move businesses and people forward.
-
-        Looking forward to meeting you.
-      </p>
+      <div class="hero-sub fade-in">
+        <p>Hi 👋 Thanks for taking a look at my work. I&#8217;m a multidisciplinary designer and creative lead with experience across some of Australia&#8217;s leading D2C and B2B brands, both agency-side and in-house. I&#8217;ve worked across brand systems, campaigns, product experiences and creative strategy, helping teams turn ideas into work that&#8217;s clear, useful and commercially effective.</p>
+        <p>I care about craft, but I also value speed, momentum and getting work into the world. The best creative teams know when to refine and when to ship. I enjoy working closely with ambitious founders, marketers and product teams to build things end-to-end, especially in fast-paced environments where adaptability matters. Curious, practical and highly hands-on, I&#8217;m happiest making things that move businesses and people forward.</p>
+        <p>Looking forward to meeting you.</p>
+      </div>
     </div>
     <div class="hero-skills fade-in">
       <div class="hero-skills-grid">
