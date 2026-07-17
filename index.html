@@ -817,15 +817,15 @@
     <span class="chapter-nav-label">Intro</span>
     <span class="chapter-nav-marker"></span>
   </a>
-  <a href="#nourish"  class="chapter-nav-item" data-target="nourish">
+  <a href="#nourishingredients"  class="chapter-nav-item" data-target="nourishingredients">
     <span class="chapter-nav-label">Nourish Ingredients</span>
     <span class="chapter-nav-marker"></span>
   </a>
-  <a href="#wgac"     class="chapter-nav-item" data-target="wgac">
+  <a href="#whogivesacrap"     class="chapter-nav-item" data-target="whogivesacrap">
     <span class="chapter-nav-label">Who Gives A Crap</span>
     <span class="chapter-nav-marker"></span>
   </a>
-  <a href="#jobquote" class="chapter-nav-item" data-target="jobquote">
+  <a href="#AutoQuote" class="chapter-nav-item" data-target="AutoQuote">
     <span class="chapter-nav-label">AutoQuote</span>
     <span class="chapter-nav-marker"></span>
   </a>
@@ -833,7 +833,7 @@
     <span class="chapter-nav-label">Minimetas</span>
     <span class="chapter-nav-marker"></span>
   </a>
-  <a href="#making"   class="chapter-nav-item" data-target="making">
+  <a href="#heyneon"   class="chapter-nav-item" data-target="heyneon">
     <span class="chapter-nav-label">Hey Neon</span>
     <span class="chapter-nav-marker"></span>
   </a>
@@ -911,7 +911,7 @@
 <!-- ╌╌ NOURISH MODULES ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
 
 <!-- NI_01 — wow moment first -->
-<div id="nourish" class="module--full-bleed">
+<div id="nourishingredients" class="module--full-bleed">
   <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/1.webp" alt="Nourish Ingredients brand overview">
 </div>
 
@@ -1010,7 +1010,7 @@
 ═══════════════════════════════════════════ -->
 <div class="chapter-divider"></div>
 
-<div id="wgac" class="module--full-bleed">
+<div id="whogivesacrap" class="module--full-bleed">
   <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/1.webp" alt="Who Gives A Crap brand campaigns">
 </div>
 
@@ -1260,7 +1260,7 @@
 ═══════════════════════════════════════════ -->
 <div class="chapter-divider"></div>
 
-<div id="jobquote" class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/autoquote/1.webp" alt="Job Quote"></div>
+<div id="AutoQuote" class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/autoquote/1.webp" alt="Job Quote"></div>
 
 <div class="chapter-intro compact">
   <div class="chapter-intro-inner">
@@ -1294,9 +1294,9 @@
 ═══════════════════════════════════════════ -->
 <div class="chapter-divider"></div>
 
-<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/1.webp" alt="Minimetas"></div>
+<div id="minimetas" class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/minimetas/1.webp" alt="Minimetas"></div>
 
-<div id="minimetas" class="chapter-intro compact">
+<div class="chapter-intro compact">
   <div class="chapter-intro-inner">
     <div class="project-meta">
       <p class="project-number fade-in">2020–2021</p>
@@ -1366,9 +1366,9 @@
 ═══════════════════════════════════════════ -->
 <div class="chapter-divider"></div>
 
-<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/1.webp" alt="Hey Neon"></div>
+<div id="heyneon" class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/1.webp" alt="Hey Neon"></div>
 
-<div id="making" class="chapter-intro compact">
+<div class="chapter-intro compact">
   <div class="chapter-intro-inner">
     <div class="project-meta">
       <p class="project-number fade-in">2020–Present</p>
@@ -1531,13 +1531,13 @@
 
   // Sections in scroll order for active-dot tracking
   const sections = [
-    { id: 'hero'      },
-    { id: 'nourish'   },
-    { id: 'wgac'      },
-    { id: 'jobquote'  },
-    { id: 'minimetas' },
-    { id: 'making'    },
-    { id: 'contact'   },
+    { id: 'hero'               },
+    { id: 'nourishingredients' },
+    { id: 'whogivesacrap'      },
+    { id: 'AutoQuote'          },
+    { id: 'minimetas'          },
+    { id: 'heyneon'            },
+    { id: 'contact'            },
   ];
 
   function updateChapterNav() {
