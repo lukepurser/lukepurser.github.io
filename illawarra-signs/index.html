@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NR2QF4PP');</script>
+<!-- End Google Tag Manager -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Luke Purser — Designer & Maker</title>
+<link rel="icon" type="image/png" href="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/favicon.png">
+<link rel="apple-touch-icon" href="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/favicon-180.png">
+<style>
+  :root {
+    --bg:     #FFFFFF;
+    --black:  #1D1D1F;
+    --muted:  #6E6E73;
+    --subtle: #AEAEB2;
+    --border: rgba(0,0,0,0.09);
+    --white:  #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--black);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    cursor: default;
+  }
+
+  /* ─── NAV ─── */
+  nav#nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.1rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.4s, border-color 0.4s, transform 0.38s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  nav#nav.scrolled {
+    background: rgba(245,245,247,0.88);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  nav#nav.hidden {
+    transform: translateY(-100%);
+  }
+
+  .nav-name {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--black);
+    flex: 1;
+  }
+
+  .nav-centre {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .nav-cta {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--white);
+    background: var(--black);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    padding: 7px 16px;
+    border: 0.5px solid var(--black);
+    border-radius: 980px;
+    transition: background 0.2s, opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.75; }
+
+  /* ─── PROGRESS BAR ─── */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 1.5px;
+    background: var(--black);
+    opacity: 0.25;
+    z-index: 200;
+    transition: width 0.08s linear;
+    width: 0%;
+  }
+
+  /* ─── CHAPTER NAV (right-side breadcrumb) ─── */
+  .chapter-nav {
+    position: fixed;
+    right: 1.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
+
+  .chapter-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .chapter-nav-label {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: #888;
+    opacity: 0;
+    transform: translateX(5px);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .chapter-nav-item:hover .chapter-nav-label {
+    opacity: 0.45;
+    transform: translateX(0);
+  }
+
+  .chapter-nav-item.active .chapter-nav-label {
+    opacity: 0.85;
+    transform: translateX(0);
+  }
+
+  .chapter-nav-marker {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--black);
+    opacity: 0.2;
+    flex-shrink: 0;
+    transition: height 0.35s cubic-bezier(0.4,0,0.2,1),
+                border-radius 0.35s cubic-bezier(0.4,0,0.2,1),
+                opacity 0.25s ease,
+                background 0.25s ease;
+  }
+
+  .chapter-nav-item.active .chapter-nav-marker {
+    opacity: 1;
+    height: 22px;
+    border-radius: 1.5px;
+  }
+
+  /* Light mode — over dark sections */
+  .chapter-nav.light .chapter-nav-label  { color: var(--white); }
+  .chapter-nav.light .chapter-nav-marker { background: var(--white); }
+
+  /* ─── FADE IN ─── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .fade-in:nth-child(2) { transition-delay: 0.08s; }
+  .fade-in:nth-child(3) { transition-delay: 0.16s; }
+  .fade-in:nth-child(4) { transition-delay: 0.24s; }
+  .fade-in:nth-child(5) { transition-delay: 0.32s; }
+
+  /* ═══════════════════════════════════════
+     HERO
+  ═══════════════════════════════════════ */
+  #hero {
+    min-height: 100vh;
+    padding: 7rem 2.5rem 5rem;
+    border-bottom: 0.5px solid rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 5rem;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.75rem;
+  }
+
+  .hero-name {
+    font-size: clamp(32px, 3.8vw, 52px);
+    font-weight: 500;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--black);
+    margin-bottom: 0;
+  }
+
+  .hero-title {
+    font-size: clamp(32px, 3.8vw, 52px);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: #0009;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 740px;
+    margin-bottom: 0;
+    letter-spacing: 0.002em;
+  }
+
+  /* Skills sidebar */
+  .hero-skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-roles {
+    grid-column: 1 / -1;
+    padding-top: 0.25rem;
+  }
+
+  .hero-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #34C759;
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(0.85); }
+  }
+
+  .hero-sub p + p { margin-top: 1.1em; }
+
+  /* Skills sidebar */
+  .hero-skills { padding-top: 0.25rem; }
+
+  .skills-col-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--black);
+    margin-bottom: 0.4rem;
+  }
+
+  .skills-list {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.01em;
+  }
+
+  /* ═══════════════════════════════════════
+     CHAPTER STRUCTURE
+  ═══════════════════════════════════════ */
+
+  .chapter-divider {
+    width: 100%;
+    height: 0.5px;
+    background: var(--border);
+  }
+
+  .chapter-intro {
+    padding: 6rem 2.5rem;
+  }
+
+  .chapter-intro.dark {
+    background: #111113;
+    color: var(--white);
+  }
+
+  .chapter-intro.tinted { background: #EBEBED; }
+
+  /* Compact variant — half-height metadata strip */
+  .chapter-intro.compact {
+    padding: 5rem 2.5rem;
+  }
+
+  .chapter-intro.compact .chapter-intro-inner {
+    grid-template-columns: 2fr 3fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .chapter-intro.compact .project-meta {
+    gap: 0.5rem;
+  }
+
+  .chapter-intro.compact .project-name {
+    font-size: clamp(22px, 2.2vw, 32px);
+    white-space: nowrap;
+    letter-spacing: -0.03em;
+  }
+
+  .chapter-intro.compact .project-detail {
+    gap: 1.25rem;
+  }
+
+  .chapter-intro.compact .project-desc {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .chapter-intro-inner {
+    max-width: 1100px;
+    margin: 0 10rem 0 6rem;
+    width: calc(100% - 16rem);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .chapter-intro-inner.solo {
+    grid-template-columns: 1fr;
+    max-width: 680px;
+  }
+
+  /* Project meta */
+  .project-meta { display: flex; flex-direction: column; gap: 0.8rem; }
+
+  .project-number {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .dark .project-number { color: rgba(255,255,255,0.35); }
+
+  .project-name {
+    font-size: clamp(42px, 5.5vw, 72px);
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -0.04em;
+    color: var(--black);
+  }
+  .dark .project-name { color: var(--white); }
+
+  .project-context {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: -0.01em;
+  }
+  .dark .project-context { color: rgba(255,255,255,0.4); }
+
+  .project-desc {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--black);
+    letter-spacing: -0.01em;
+  }
+  .dark .project-desc { color: rgba(255,255,255,0.7); }
+
+  .project-detail { display: flex; flex-direction: column; gap: 2rem; }
+
+  /* Tags */
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .tag {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border: 0.5px solid var(--border);
+    border-radius: 980px;
+    color: var(--muted);
+  }
+  .dark .tag {
+    border-color: rgba(255,255,255,0.14);
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* Highlight cards (WGAC) */
+  .highlight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .highlight-card {
+    background: rgba(0,0,0,0.04);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+  .highlight-card-title {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+    color: var(--black);
+  }
+  .highlight-card-desc {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ═══════════════════════════════════════
+     MODULES
+  ═══════════════════════════════════════ */
+
+  /* Full-bleed — edge to edge, zero gap */
+  .module--full-bleed {
+    width: 100%;
+    display: block;
+    line-height: 0;
+    font-size: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .module--full-bleed img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Forced viewport height */
+  .module--full-bleed.tall img,
+  .module--full-bleed.tall .img-placeholder {
+    height: 80vh;
+  }
+
+  /* Contained — centred, guttered */
+  .module--contained {
+    padding: 4rem 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .module--contained img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+  }
+
+  /* Duo */
+  .module--duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    align-items: stretch;
+  }
+  .module--duo img {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Trio */
+  .module--trio {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3px;
+  }
+  .module--trio img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Split — image + text */
+  .module--split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+  .module--split img {
+    width: 100%;
+    min-height: 400px;
+    object-fit: cover;
+    display: block;
+  }
+  .module--split .split-text {
+    padding: 4rem;
+  }
+  .module--split .split-text p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--muted);
+    letter-spacing: -0.01em;
+  }
+
+  /* Caption */
+  .module--caption {
+    padding: 2.5rem 2.5rem;
+    max-width: 780px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .module--caption p {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--subtle);
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+  }
+
+  /* Pull quote */
+  .module--pullquote {
+    padding: 6rem 2.5rem;
+    text-align: center;
+    max-width: 860px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .module--pullquote p {
+    font-size: clamp(22px, 3vw, 38px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+    color: var(--black);
+  }
+
+  /* Image placeholder */
+  .img-placeholder {
+    background: rgba(0,0,0,0.035);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    color: var(--subtle);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    width: 100%;
+  }
+
+  /* ═══════════════════════════════════════
+     MAKING GRID
+  ═══════════════════════════════════════ */
+
+  .making-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+  }
+
+  .making-cell {
+    overflow: hidden;
+    aspect-ratio: 1;
+  }
+
+  .making-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.55s ease;
+  }
+  .making-cell:hover img { transform: scale(1.04); }
+
+  /* ═══════════════════════════════════════
+     CONTACT
+  ═══════════════════════════════════════ */
+
+  #contact {
+    background: #111113;
+    color: var(--white);
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    padding: 6rem 2.5rem;
+  }
+
+  .contact-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .contact-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 2rem;
+  }
+
+  .contact-prompt {
+    font-size: 15px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .contact-email {
+    font-size: clamp(36px, 6vw, 80px);
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    color: var(--white);
+    text-decoration: none;
+    line-height: 1;
+    display: inline-block;
+    border-bottom: 1.5px solid rgba(255,255,255,0.25);
+    transition: border-color 0.2s;
+  }
+  .contact-email:hover { border-color: var(--white); }
+
+  .contact-footer {
+    margin-top: 5rem;
+    padding-top: 2rem;
+    border-top: 0.5px solid rgba(255,255,255,0.08);
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.02em;
+  }
+
+  /* ═══════════════════════════════════════
+     MOBILE
+  ═══════════════════════════════════════ */
+  @media (max-width: 900px) {
+
+    /* Nav */
+    nav#nav { padding: 1rem 1.25rem; }
+    .nav-centre { display: none !important; }
+
+    /* Hide right-side breadcrumb nav */
+    .chapter-nav { display: none !important; }
+
+    /* Hero */
+    #hero { padding: 6rem 1.25rem 3rem; }
+    .hero-inner {
+      grid-template-columns: 1fr !important;
+      gap: 2.5rem;
+    }
+    .hero-sub { max-width: 100%; }
+
+    /* Project intro sections */
+    .chapter-intro { padding: 3.5rem 1.25rem; }
+    .chapter-intro.compact { padding: 3rem 1.25rem; }
+
+    .chapter-intro-inner {
+      margin: 0 !important;
+      width: 100% !important;
+      grid-template-columns: 1fr !important;
+      gap: 2rem;
+    }
+
+    .chapter-intro.compact .chapter-intro-inner {
+      grid-template-columns: 1fr !important;
+    }
+
+    .chapter-intro.compact .project-name {
+      white-space: normal;
+    }
+
+    /* Project name — tighten on small screens */
+    .project-name { font-size: clamp(36px, 10vw, 56px); }
+
+    /* Media modules */
+    .module--duo {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .module--duo img { min-height: auto; }
+
+    .module--trio {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    /* Highlight cards */
+    .highlight-grid { grid-template-columns: 1fr; }
+
+    /* Video stages — less padding, videos fill more width */
+    .video-stage {
+      padding: 3rem 1.25rem !important;
+      flex-wrap: wrap;
+      gap: 1.25rem !important;
+    }
+    .video-stage video {
+      width: 96% !important;
+      max-width: 100% !important;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2) !important;
+    }
+
+    /* Paid ads grid */
+    .paid-ads-section { padding: 3rem 0 !important; }
+    .paid-ads-grid {
+      max-width: 100% !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0.75rem !important;
+      padding: 0 1rem !important;
+    }
+
+    /* WGAC gif grid */
+    .gif-grid-section { padding: 3.5rem 0 !important; }
+    .gif-grid {
+      max-width: 100% !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0.75rem !important;
+      padding: 0 1.25rem !important;
+    }
+
+    /* Minimetas gif grid — 2 columns on mobile */
+    .minimetas-gif-section { padding: 3rem 1rem !important; }
+    .minimetas-gif-grid {
+      max-width: 100% !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0.75rem !important;
+    }
+
+    /* Hey Neon — stack image+video pairs */
+    .hn-row {
+      flex-direction: column !important;
+      align-items: center !important;
+      padding: 3rem 1.25rem !important;
+      gap: 1.5rem !important;
+    }
+    .hn-row > div {
+      width: 100% !important;
+      height: auto !important;
+    }
+    .hn-row img {
+      height: auto !important;
+      width: 100% !important;
+    }
+    .hn-row video {
+      width: 100% !important;
+      height: auto !important;
+    }
+    /* Fix the aspect-ratio video wrapper height on mobile */
+    #hn03-wrap, #hn04-wrap {
+      height: auto !important;
+      aspect-ratio: 9/16;
+      width: 100% !important;
+    }
+
+    /* Contact */
+    #contact { padding: 4rem 1.25rem; }
+
+  }
+
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NR2QF4PP"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div class="progress-bar" id="progress"></div>
+
+<!-- ─── TOP NAV ─── -->
+<nav id="nav">
+  <div class="nav-name">Luke Purser</div>
+  <span class="nav-centre">Designer & Maker</span>
+  <a href="mailto:lukepurser@me.com" class="nav-cta">Get in touch</a>
+</nav>
+
+<!-- ─── RIGHT-SIDE CHAPTER NAV ─── -->
+<nav class="chapter-nav" id="chapterNav" aria-label="Page sections">
+  <a href="#hero"     class="chapter-nav-item active" data-target="hero">
+    <span class="chapter-nav-label">Intro</span>
+    <span class="chapter-nav-marker"></span>
+  </a>
+  <a href="#heyneon"   class="chapter-nav-item" data-target="heyneon">
+    <span class="chapter-nav-label">Hey Neon</span>
+    <span class="chapter-nav-marker"></span>
+  </a>
+  <a href="#nourishingredients"  class="chapter-nav-item" data-target="nourishingredients">
+    <span class="chapter-nav-label">Nourish Ingredients</span>
+    <span class="chapter-nav-marker"></span>
+  </a>
+  <a href="#whogivesacrap"     class="chapter-nav-item" data-target="whogivesacrap">
+    <span class="chapter-nav-label">Who Gives A Crap</span>
+    <span class="chapter-nav-marker"></span>
+  </a>
+  <a href="#contact"  class="chapter-nav-item" data-target="contact">
+    <span class="chapter-nav-label">Contact</span>
+    <span class="chapter-nav-marker"></span>
+  </a>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-inner">
+    <div>
+      <h1 class="hero-name fade-in">Luke Purser</h1>
+      <p class="hero-title fade-in">Designer &amp; Maker</p>
+      <div class="hero-sub fade-in">
+        <p>I make things. I build, I fix, it&#8217;s who I am. Designer at heart, with 20 years of experience across brands, print, signage and physical production.</p>
+        <p>I&#8217;ve spent years designing signage, decals, displays and expo stands and working with printers and fabricators to make them real. Now I want to be on the other side, hands on the tools and making the thing myself.</p>
+        <p>I make neon by hand, do woodwork and metalwork, and have renovated my own home top to bottom. I&#8217;ve recently got my White Card because I want to spend more time making real things, not just files.</p>
+        <p>I haven&#8217;t run Onyx, Flexi or Caldera, and commercial vinyl application is new ground. Illustrator I know inside out. I learn fast, work autonomously and I&#8217;m ready to get stuck in.</p>
+      </div>
+    </div>
+    <div class="hero-skills fade-in">
+      <div class="hero-skills-grid">
+        <div>
+          <p class="skills-col-label">As a designer</p>
+          <div class="skills-list">
+            Illustration &amp; Artwork<br>
+            Graphic Design<br>
+            Packaging<br>
+            Art Direction<br>
+            Editorial &amp; Print<br>
+            Product Design<br>
+            Web Design<br>
+            SEO &amp; Lead Gen
+          </div>
+        </div>
+        <div>
+          <p class="skills-col-label">As a builder</p>
+          <div class="skills-list">
+            Neon Fabrication<br>
+            Glass Bending<br>
+            Print-Ready Artwork<br>
+            Signage Production<br>
+            Materials &amp; Finishing<br>
+            Hands-on Prototyping
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     04 · HEY NEON
+═══════════════════════════════════════════ -->
+<div class="chapter-divider"></div>
+
+<div id="heyneon" class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/1.webp" alt="Hey Neon"></div>
+
+<div class="chapter-intro compact">
+  <div class="chapter-intro-inner">
+    <div class="project-meta">
+      <p class="project-number fade-in">2020–Present</p>
+      <h2 class="project-name fade-in">Hey Neon</h2>
+      <p class="project-context fade-in">Solo build · Neon Maker</p>
+    </div>
+    <div class="project-detail">
+      <p class="project-desc fade-in">
+I love illustration, vintage signage and neon. While living in Los Angeles I had the chance to study traditional glass bending and neon fabrication under a practising artist — a properly physical craft built on heat, timing and muscle memory, and one that&#8217;s disappearing fast as LEDs replace traditional neon. When I moved back to Australia, I built a small studio at home called Hey Neon to keep the craft alive as an ongoing passion project.
+      </p>
+      <div class="tags fade-in">
+        <span class="tag">Handmade</span>
+        <span class="tag">Glass Bending</span>
+        <span class="tag">Lighting</span>
+        <span class="tag">Signage</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╌╌ HEY NEON MODULES ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/2.webp" alt=""></div>
+
+<div class="hn-row" style="background:#EEEEE9; padding: 7rem 4rem 2rem; display:flex; justify-content:center; align-items:flex-start; gap: 3rem;">
+  <div style="border-radius:16px; overflow:hidden;">
+    <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/3.webp" alt="Hey Neon neon sign" style="height:clamp(370px, 47vw, 693px); width:auto; display:block;">
+  </div>
+  <div style="border-radius:16px; overflow:hidden; height:clamp(370px, 47vw, 693px); aspect-ratio:9/16; flex-shrink:0; position:relative; cursor:pointer;" id="hn03-wrap">
+    <video id="hn03-vid" muted playsinline preload="auto" style="width:100%; height:100%; object-fit:cover; display:block;">
+      <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/3.mp4" type="video/mp4">
+    </video>
+    <div id="hn03-btn" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; transition:opacity 0.2s;">
+      <svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><polygon points="38,28 74,48 38,68" fill="#fff"/></svg>
+    </div>
+  </div>
+  <script>
+    (function(){
+      var wrap = document.getElementById('hn03-wrap');
+      var vid  = document.getElementById('hn03-vid');
+      var btn  = document.getElementById('hn03-btn');
+      var pauseSvg = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><rect x="28" y="26" width="14" height="44" rx="3" fill="#fff"/><rect x="54" y="26" width="14" height="44" rx="3" fill="#fff"/></svg>';
+      var playSvg  = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><polygon points="38,28 74,48 38,68" fill="#fff"/></svg>';
+      // First-frame fix: briefly play muted then pause
+      var hn03shown = false;
+      function hn03FirstFrame() {
+        if (hn03shown) return; hn03shown = true;
+        vid.play().then(function(){ vid.pause(); vid.currentTime = 0; }).catch(function(){ vid.currentTime = 0.1; });
+      }
+      vid.addEventListener('loadeddata', hn03FirstFrame);
+      vid.addEventListener('canplay', hn03FirstFrame);
+      if (vid.readyState >= 3) hn03FirstFrame();
+
+      wrap.addEventListener('click', function(){
+        if(vid.paused){ vid.muted=false; vid.currentTime=0; vid.play(); btn.style.opacity='0'; } else { vid.pause(); btn.innerHTML=playSvg; btn.style.opacity='1'; }
+      });
+      wrap.addEventListener('mouseenter', function(){ if(!vid.paused){ btn.innerHTML=pauseSvg; btn.style.opacity='1'; } });
+      wrap.addEventListener('mouseleave', function(){ if(!vid.paused){ btn.style.opacity='0'; } });
+    })();
+  </script>
+</div>
+
+<div class="hn-row" style="background:#EEEEE9; padding: 2rem 4rem 7rem; display:flex; justify-content:center; align-items:flex-start; gap: 3rem;">
+  <div style="border-radius:16px; overflow:hidden; height:clamp(370px, 47vw, 693px); aspect-ratio:9/16; flex-shrink:0; position:relative; cursor:pointer;" id="hn04-wrap">
+    <video id="hn04-vid" muted playsinline preload="auto" style="width:100%; height:100%; object-fit:cover; display:block;">
+      <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/4.mp4" type="video/mp4">
+    </video>
+    <div id="hn04-btn" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; transition:opacity 0.2s;">
+      <svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><polygon points="38,28 74,48 38,68" fill="#fff"/></svg>
+    </div>
+  </div>
+  <script>
+    (function(){
+      var wrap = document.getElementById('hn04-wrap');
+      var vid  = document.getElementById('hn04-vid');
+      var btn  = document.getElementById('hn04-btn');
+      var pauseSvg = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><rect x="28" y="26" width="14" height="44" rx="3" fill="#fff"/><rect x="54" y="26" width="14" height="44" rx="3" fill="#fff"/></svg>';
+      var playSvg  = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><polygon points="38,28 74,48 38,68" fill="#fff"/></svg>';
+      // First-frame fix: briefly play muted then pause
+      var hn04shown = false;
+      function hn04FirstFrame() {
+        if (hn04shown) return; hn04shown = true;
+        vid.play().then(function(){ vid.pause(); vid.currentTime = 0; }).catch(function(){ vid.currentTime = 0.1; });
+      }
+      vid.addEventListener('loadeddata', hn04FirstFrame);
+      vid.addEventListener('canplay', hn04FirstFrame);
+      if (vid.readyState >= 3) hn04FirstFrame();
+
+      wrap.addEventListener('click', function(){
+        if(vid.paused){ vid.muted=false; vid.currentTime=0; vid.play(); btn.style.opacity='0'; } else { vid.pause(); btn.innerHTML=playSvg; btn.style.opacity='1'; }
+      });
+      wrap.addEventListener('mouseenter', function(){ if(!vid.paused){ btn.innerHTML=pauseSvg; btn.style.opacity='1'; } });
+      wrap.addEventListener('mouseleave', function(){ if(!vid.paused){ btn.style.opacity='0'; } });
+    })();
+  </script>
+  <div style="border-radius:16px; overflow:hidden;">
+    <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/4.webp" alt="Hey Neon" style="height:clamp(370px, 47vw, 693px); width:auto; display:block;">
+  </div>
+</div>
+
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/5.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/6.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/7.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/8.webp" alt=""></div>
+
+
+<!-- ═══════════════════════════════════════════
+     01 · NOURISH INGREDIENTS
+═══════════════════════════════════════════ -->
+<div class="chapter-divider"></div>
+
+<!-- ╌╌ NOURISH MODULES ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
+
+<!-- NI_01 — wow moment first -->
+<div id="nourishingredients" class="module--full-bleed">
+  <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/1.webp" alt="Nourish Ingredients brand overview">
+</div>
+
+<!-- Compact copy block — after the image -->
+<div class="chapter-intro compact">
+  <div class="chapter-intro-inner">
+    <div class="project-meta">
+      <p class="project-number fade-in">2023–2026</p>
+      <h2 class="project-name fade-in">Nourish Ingredients</h2>
+      <p class="project-context fade-in">Design Director · Food-tech startup B2B</p>
+    </div>
+    <div class="project-detail">
+      <p class="project-desc fade-in">
+        Nourish Ingredients creates animal-free fats through precision fermentation. I joined as Design Director and rebuilt the brand from the ground up: identity system, packaging, print collateral and photography direction, working closely with the C-suite to make deep tech feel clear, desirable and commercially ready.
+      </p>
+      <div class="tags fade-in">
+        <span class="tag">Branding</span>
+        <span class="tag">Packaging</span>
+        <span class="tag">Print Production</span>
+        <span class="tag">Art Direction</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/2.webp" alt=""></div>
+<div class="video-stage" style="background:#000; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
+  <video id="ni03-video" autoplay loop muted playsinline style="width:60%; display:block; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px;">
+    <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/3.mp4" type="video/mp4">
+  </video>
+</div>
+<script>
+  (function(){
+    var v = document.getElementById('ni03-video');
+    function setSpeed(){ v.playbackRate = 2.0; }
+    v.addEventListener('loadedmetadata', setSpeed);
+    v.addEventListener('play', setSpeed);
+    if(v.readyState >= 1) setSpeed();
+  })();
+</script>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/4.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/5.webp" alt=""></div>
+<div class="video-stage" style="background:#000; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
+  <video autoplay loop muted playsinline style="width:70%; display:block; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px;">
+    <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/6.mp4" type="video/mp4">
+  </video>
+</div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/7.webp" alt=""></div>
+<!-- Product copy block — separates brand and product chapters -->
+<div class="chapter-intro compact tinted">
+  <div class="chapter-intro-inner">
+    <div class="project-meta">
+      <p class="project-number fade-in">2023–2026</p>
+      <h2 class="project-name fade-in">Nourish Ingredients:<br>Product</h2>
+      <p class="project-context fade-in">Design Director · Food-tech startup B2B</p>
+    </div>
+    <div class="project-detail">
+      <p class="project-desc fade-in">
+        Tastilux® and Creamilux® are proprietary fat ingredients designed to compete on taste. I created both names and built the packaging and sampling experience around them: bespoke packaging, stickers and sampling collateral.
+      </p>
+      <div class="tags fade-in">
+        <span class="tag">Product Naming</span>
+        <span class="tag">Packaging</span>
+        <span class="tag">Print &amp; Finishing</span>
+        <span class="tag">Sampling</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/10.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/11.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/12.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/13.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/14.webp" alt=""></div>
+<div class="video-stage" style="background:#FF3D3D; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
+  <video autoplay loop muted playsinline style="width:70%; display:block; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; box-shadow: 0 32px 80px rgba(0,0,0,0.35);">
+    <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/15.mp4" type="video/mp4">
+  </video>
+</div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/16.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/17.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/18.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/19.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/20.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/21.webp" alt=""></div>
+<div class="video-stage" style="background:#0D6DFF; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
+  <video autoplay loop muted playsinline style="width:70%; display:block; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; box-shadow: 0 32px 80px rgba(0,0,0,0.35);">
+    <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/22.mp4" type="video/mp4">
+  </video>
+</div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/ni/23.webp" alt=""></div>
+
+
+<!-- ═══════════════════════════════════════════
+     02 · WHO GIVES A CRAP
+═══════════════════════════════════════════ -->
+<div class="chapter-divider"></div>
+
+<div id="whogivesacrap" class="module--full-bleed">
+  <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/1.webp" alt="Who Gives A Crap brand campaigns">
+</div>
+
+<div class="chapter-intro compact">
+  <div class="chapter-intro-inner">
+    <div class="project-meta">
+      <p class="project-number fade-in">2018–2020</p>
+      <h2 class="project-name fade-in">Who Gives A Crap</h2>
+      <p class="project-context fade-in">Design Lead · Toilet Paper Subscription B2C</p>
+    </div>
+    <div class="project-detail">
+      <p class="project-desc fade-in">
+        I moved to Los Angeles to sell toilet paper. Who Gives A Crap relocated part of the team during a period of rapid growth across the US and Europe. Working as an integrated designer in a fast, scrappy environment, I designed campaigns, websites, limited-edition packaging, print and illustration work for retail, on shelf, and on screen.
+      </p>
+      <div class="tags fade-in">
+        <span class="tag">Design &amp; Art Direction</span>
+        <span class="tag">Illustration</span>
+        <span class="tag">Packaging</span>
+        <span class="tag">Print &amp; Retail</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╌╌ WGAC MODULES ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
+<div class="module--full-bleed" style="position:relative;">
+  <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/2.gif" alt="">
+  <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/2b.gif" alt="" style="position:absolute; top:50%; left:calc(5% + 8px); transform:translateY(-50%); width:25%; pointer-events:none;">
+</div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/3.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/4.webp" alt=""></div>
+<div class="video-stage" style="background:#FDBB1F; padding: 7rem 2.5rem; display:flex; justify-content:center; align-items:center;">
+  <video autoplay loop muted playsinline style="width:70%; display:block; border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; box-shadow: 0 32px 80px rgba(0,0,0,0.35);">
+    <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/5.mp4" type="video/mp4">
+  </video>
+</div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/6.webp" alt=""></div>
+
+<!-- ╌╌ WGAC PAID ADS GRID ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
+<div class="paid-ads-section" style="background:#EEEEE9; padding: 6rem 0;">
+  <div class="paid-ads-grid" style="max-width: 72%; margin: 0 auto; display:grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; padding: 0;">
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline muted preload="auto">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_7.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline muted preload="auto">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_8.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline muted preload="auto">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_9.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline muted preload="auto">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_2.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline muted preload="auto">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_5.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+    <div class="pa-cell">
+      <video class="pa-video" loop playsinline muted preload="auto">
+        <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/Paid_11.mp4" type="video/mp4">
+      </video>
+      <button class="pa-btn" aria-label="Play">
+        <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .pa-cell {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    cursor: pointer;
+  }
+  .pa-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.01);
+  }
+  .pa-btn {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .pa-btn svg {
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+    transition: transform 0.15s;
+  }
+  .pa-btn:hover svg {
+    transform: scale(1.1);
+  }
+  .pa-cell.playing .pa-btn {
+    opacity: 0;
+  }
+  .pa-cell.playing:hover .pa-btn {
+    opacity: 1;
+  }
+  .pa-cell.playing .pa-btn svg polygon {
+    points: "16,13 16,35 22,35 22,13 26,13 26,35 32,35 32,13";
+  }
+</style>
+
+<script>
+  (function() {
+    var pauseIcon = '<svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><rect x="14" y="13" width="7" height="22" rx="1.5" fill="#fff"/><rect x="27" y="13" width="7" height="22" rx="1.5" fill="#fff"/></svg>';
+    var playIcon  = '<svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="#fff"/></svg>';
+
+    document.querySelectorAll('.pa-cell').forEach(function(cell) {
+      var video = cell.querySelector('.pa-video');
+      var btn   = cell.querySelector('.pa-btn');
+
+      // First-frame fix: briefly play muted then pause to paint a frame
+      video.muted = true;
+      var firstFrameShown = false;
+      function showFirstFrame() {
+        if (firstFrameShown) return;
+        firstFrameShown = true;
+        video.play().then(function() {
+          video.pause();
+          video.currentTime = 0;
+        }).catch(function() {
+          video.currentTime = 0.1;
+        });
+      }
+      video.addEventListener('loadeddata', showFirstFrame);
+      video.addEventListener('canplay', showFirstFrame);
+      if (video.readyState >= 3) showFirstFrame();
+
+      cell.addEventListener('click', function() {
+        if (video.paused) {
+          video.muted = false;
+          video.currentTime = 0;
+          video.play();
+          cell.classList.add('playing');
+          btn.innerHTML = pauseIcon;
+        } else {
+          video.pause();
+          cell.classList.remove('playing');
+          btn.innerHTML = playIcon;
+        }
+      });
+
+      video.addEventListener('ended', function() {
+        cell.classList.remove('playing');
+        btn.innerHTML = playIcon;
+      });
+    });
+  })();
+</script>
+
+
+<!-- ╌╌ WGAC GIF GRID ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
+<div class="gif-grid-section" style="background:#EEEEE9; padding: 7rem 0;">
+  <div class="gif-grid" style="max-width: 80%; margin: 0 auto; display:grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding: 0 2rem;">
+
+    <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/10_1.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.01);">
+    </div>
+    <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/10_2.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.01);">
+    </div>
+    <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/10_3.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.01);">
+    </div>
+    <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/10_4.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.01);">
+    </div>
+    <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/10_5.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.01);">
+    </div>
+    <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1/1;">
+      <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/10_6.gif" alt="" style="width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.01);">
+    </div>
+
+  </div>
+</div>
+
+
+<div class="module--full-bleed" style="position:relative;">
+  <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/11.webp" alt="">
+  <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/11b.gif" alt="" style="position:absolute; top:35.5%; left:51%; transform:translate(-50%, -50%); width:38.5%; pointer-events:none;">
+</div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/12.webp" alt=""></div>
+<div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/wgac/13.webp" alt=""></div>
+
+<!-- ═══════════════════════════════════════════
+     CONTACT
+═══════════════════════════════════════════ -->
+<div class="chapter-divider"></div>
+
+<section id="contact">
+  <div class="contact-inner">
+    <p class="contact-eyebrow fade-in">Say hello</p>
+    <a href="mailto:lukepurser@me.com" class="contact-email fade-in">lukepurser@me.com</a>
+  </div>
+</section>
+
+
+<script>
+  // ── Progress bar
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+    progress.style.width = pct + '%';
+  }, { passive: true });
+
+  // ── Nav: backdrop + smart hide/show on scroll direction
+  const navEl = document.getElementById('nav');
+  let lastScrollY = 0;
+
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+
+    // Backdrop
+    navEl.classList.toggle('scrolled', y > 50);
+
+    // Hide on scroll down, show on scroll up
+    if (y > lastScrollY && y > 80) {
+      navEl.classList.add('hidden');
+    } else {
+      navEl.classList.remove('hidden');
+    }
+    lastScrollY = y;
+  }, { passive: true });
+
+  // ── Fade in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ── Chapter nav: active state + light/dark toggle
+  const chapterNav = document.getElementById('chapterNav');
+  const navItems   = Array.from(chapterNav.querySelectorAll('.chapter-nav-item'));
+
+  // Sections in scroll order for active-dot tracking
+  const sections = [
+    { id: 'hero'               },
+    { id: 'heyneon'            },
+    { id: 'nourishingredients' },
+    { id: 'whogivesacrap'      },
+    { id: 'contact'            },
+  ];
+
+  function updateChapterNav() {
+    const mid = window.scrollY + window.innerHeight * 0.45;
+    let active = sections[0];
+    for (const s of sections) {
+      const el = document.getElementById(s.id);
+      if (el && el.getBoundingClientRect().top + window.scrollY <= mid) active = s;
+    }
+    navItems.forEach(item => {
+      item.classList.toggle('active', item.dataset.target === active.id);
+    });
+  }
+
+  window.addEventListener('scroll', updateChapterNav, { passive: true });
+  updateChapterNav();
+
+</script>
+
+</body>
+</html>
