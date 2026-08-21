@@ -856,9 +856,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h1 class="hero-name fade-in">Luke Purser</h1>
       <p class="hero-title fade-in">Designer &amp; Maker</p>
       <div class="hero-sub fade-in">
-        <p>I make things. I build, I fix, it&#8217;s who I am. Designer at heart, with 20 years of experience across brands, print, signage and physical production.</p>
-        <p>I&#8217;ve spent years designing signage, decals, displays and expo stands and working with printers and fabricators to make them real. Now I want to be on the other side, hands on the tools and making the thing myself.</p>
-        <p>I make neon by hand, do woodwork and metalwork, and have renovated my own home top to bottom. I&#8217;ve recently got my White Card because I want to spend more time making real things, not just files.</p>
+        <p>I make things. I build, I fix, it&#8217;s who I am. Designer at heart, with 20 years of experience across brands, print, signage and production.</p>
+        <p>I&#8217;ve spent my career designing signage, decals, displays and expo stands, working closely with printers and fabricators. Now I want to be on the other side, hands on the tools and more involved in production and fabrication.</p>
+        <p>I make neon by hand, I&#8217;m handy with tools, I do woodwork and I&#8217;ve renovated my own home top to bottom. I recently got my White Card because I want to spend more time on site, working with people, solving practical problems and contributing to work I can see out in the world.</p>
         <p>I haven&#8217;t run Onyx, Flexi or Caldera, and commercial vinyl application is new ground. Illustrator I know inside out. I learn fast, work autonomously and I&#8217;m ready to get stuck in.</p>
       </div>
     </div>
@@ -925,79 +925,18 @@ I love illustration, vintage signage and neon. While living in Los Angeles I had
 <!-- ╌╌ HEY NEON MODULES ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌ -->
 <div class="module--full-bleed"><img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/2.webp" alt=""></div>
 
-<div class="hn-row" style="background:#EEEEE9; padding: 7rem 4rem 2rem; display:flex; justify-content:center; align-items:flex-start; gap: 3rem;">
+<div class="hn-row" style="background:#EEEEE9; padding: 7rem 4rem; display:flex; justify-content:center; align-items:flex-start; gap: 3rem;">
   <div style="border-radius:16px; overflow:hidden;">
     <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/3.webp" alt="Hey Neon neon sign" style="height:clamp(370px, 47vw, 693px); width:auto; display:block;">
   </div>
-  <div style="border-radius:16px; overflow:hidden; height:clamp(370px, 47vw, 693px); aspect-ratio:9/16; flex-shrink:0; position:relative; cursor:pointer;" id="hn03-wrap">
-    <video id="hn03-vid" muted playsinline preload="auto" style="width:100%; height:100%; object-fit:cover; display:block;">
-      <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/3.mp4" type="video/mp4">
-    </video>
-    <div id="hn03-btn" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; transition:opacity 0.2s;">
-      <svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><polygon points="38,28 74,48 38,68" fill="#fff"/></svg>
-    </div>
-  </div>
-  <script>
-    (function(){
-      var wrap = document.getElementById('hn03-wrap');
-      var vid  = document.getElementById('hn03-vid');
-      var btn  = document.getElementById('hn03-btn');
-      var pauseSvg = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><rect x="28" y="26" width="14" height="44" rx="3" fill="#fff"/><rect x="54" y="26" width="14" height="44" rx="3" fill="#fff"/></svg>';
-      var playSvg  = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><polygon points="38,28 74,48 38,68" fill="#fff"/></svg>';
-      // First-frame fix: briefly play muted then pause
-      var hn03shown = false;
-      function hn03FirstFrame() {
-        if (hn03shown) return; hn03shown = true;
-        vid.play().then(function(){ vid.pause(); vid.currentTime = 0; }).catch(function(){ vid.currentTime = 0.1; });
-      }
-      vid.addEventListener('loadeddata', hn03FirstFrame);
-      vid.addEventListener('canplay', hn03FirstFrame);
-      if (vid.readyState >= 3) hn03FirstFrame();
-
-      wrap.addEventListener('click', function(){
-        if(vid.paused){ vid.muted=false; vid.currentTime=0; vid.play(); btn.style.opacity='0'; } else { vid.pause(); btn.innerHTML=playSvg; btn.style.opacity='1'; }
-      });
-      wrap.addEventListener('mouseenter', function(){ if(!vid.paused){ btn.innerHTML=pauseSvg; btn.style.opacity='1'; } });
-      wrap.addEventListener('mouseleave', function(){ if(!vid.paused){ btn.style.opacity='0'; } });
-    })();
-  </script>
-</div>
-
-<div class="hn-row" style="background:#EEEEE9; padding: 2rem 4rem 7rem; display:flex; justify-content:center; align-items:flex-start; gap: 3rem;">
-  <div style="border-radius:16px; overflow:hidden; height:clamp(370px, 47vw, 693px); aspect-ratio:9/16; flex-shrink:0; position:relative; cursor:pointer;" id="hn04-wrap">
-    <video id="hn04-vid" muted playsinline preload="auto" style="width:100%; height:100%; object-fit:cover; display:block;">
-      <source src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/4.mp4" type="video/mp4">
-    </video>
-    <div id="hn04-btn" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; transition:opacity 0.2s;">
-      <svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><polygon points="38,28 74,48 38,68" fill="#fff"/></svg>
-    </div>
-  </div>
-  <script>
-    (function(){
-      var wrap = document.getElementById('hn04-wrap');
-      var vid  = document.getElementById('hn04-vid');
-      var btn  = document.getElementById('hn04-btn');
-      var pauseSvg = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><rect x="28" y="26" width="14" height="44" rx="3" fill="#fff"/><rect x="54" y="26" width="14" height="44" rx="3" fill="#fff"/></svg>';
-      var playSvg  = '<svg viewBox="0 0 96 96" width="96" height="96"><circle cx="48" cy="48" r="48" fill="rgba(0,0,0,0.45)"/><polygon points="38,28 74,48 38,68" fill="#fff"/></svg>';
-      // First-frame fix: briefly play muted then pause
-      var hn04shown = false;
-      function hn04FirstFrame() {
-        if (hn04shown) return; hn04shown = true;
-        vid.play().then(function(){ vid.pause(); vid.currentTime = 0; }).catch(function(){ vid.currentTime = 0.1; });
-      }
-      vid.addEventListener('loadeddata', hn04FirstFrame);
-      vid.addEventListener('canplay', hn04FirstFrame);
-      if (vid.readyState >= 3) hn04FirstFrame();
-
-      wrap.addEventListener('click', function(){
-        if(vid.paused){ vid.muted=false; vid.currentTime=0; vid.play(); btn.style.opacity='0'; } else { vid.pause(); btn.innerHTML=playSvg; btn.style.opacity='1'; }
-      });
-      wrap.addEventListener('mouseenter', function(){ if(!vid.paused){ btn.innerHTML=pauseSvg; btn.style.opacity='1'; } });
-      wrap.addEventListener('mouseleave', function(){ if(!vid.paused){ btn.style.opacity='0'; } });
-    })();
-  </script>
   <div style="border-radius:16px; overflow:hidden;">
     <img src="https://pub-1a8c5e144d7844558b87c400766d752c.r2.dev/hey-neon/4.webp" alt="Hey Neon" style="height:clamp(370px, 47vw, 693px); width:auto; display:block;">
+  </div>
+</div>
+
+<div class="hn-row" style="background:#EEEEE9; padding: 0 4rem 7rem; display:flex; justify-content:center;">
+  <div style="border-radius:16px; overflow:hidden; width:100%; max-width:900px; aspect-ratio:16/9;">
+    <iframe src="https://www.youtube-nocookie.com/embed/ljDJ-q_vYRU" title="Hey Neon" style="width:100%; height:100%; display:block; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
   </div>
 </div>
 
